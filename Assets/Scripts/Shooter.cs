@@ -21,7 +21,7 @@ public class Shooter : MonoBehaviour
   // Start is called before the first frame update
   void Start()
   {
-    CreateBullet();
+    GetBullet();
   }
 
   // Update is called once per frame
@@ -41,7 +41,7 @@ public class Shooter : MonoBehaviour
 
   void HandleShoot()
   {
-    if (Input.GetButtonDown("Fire1"))
+    if (Input.GetButtonDown("Fire1") && _curBullet != null)
     {
       Shoot();
     }
@@ -57,9 +57,14 @@ public class Shooter : MonoBehaviour
     _curBullet.Shoot(shootDir, force);
   }
 
-  void CreateBullet()
+  void GetBullet()
   {
-    GameObject bullet = Instantiate(bulletPrefab, createPoint);
-    _curBullet = bullet.GetComponent<Bullet>();
+    GameObject bullet = BulletSpwan.Instance.GetAndAttachTo(createPoint);
+    if (bullet != null)
+    {
+      _curBullet = bullet.GetComponent<Bullet>();
+    }
   }
+
+
 }
