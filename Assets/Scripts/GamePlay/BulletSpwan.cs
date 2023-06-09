@@ -52,9 +52,18 @@ public class BulletSpwan : SingleTon<BulletSpwan>, ObjectPool<GameObject>
   {
     if (prefabPath != null && prefabPath.Length > 0)
     {
-      bulletPrefab = (GameObject)Resources.Load(prefabPath);
+      bulletPrefab = (GameObject)ResourceMgr.Instance.LoadFromPath(prefabPath);
     }
 
+  }
+
+  void ReleasePrefab()
+  {
+    if (bulletPrefab)
+    {
+      bulletPrefab = null;
+      ResourceMgr.Instance.ReleaseByPath(prefabPath);
+    }
   }
 
   public void Return(GameObject bullet)
@@ -69,5 +78,11 @@ public class BulletSpwan : SingleTon<BulletSpwan>, ObjectPool<GameObject>
       GameObject go = pool.Dequeue();
       DestroyImmediate(go);
     }
+  }
+
+  private void OnDestroy()
+  {
+    Clear();
+    ReleasePrefab();
   }
 }

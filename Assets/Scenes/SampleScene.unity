@@ -496,7 +496,6 @@ GameObject:
   m_Component:
   - component: {fileID: 510398424}
   - component: {fileID: 510398427}
-  - component: {fileID: 510398426}
   - component: {fileID: 510398425}
   - component: {fileID: 510398428}
   m_Layer: 0
@@ -537,28 +536,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 4823141720530821777, guid: 6b36cddde16b28940a3d2a6547295ec4, type: 3}
   createPoint: {fileID: 1254485818}
+  speedScale: 0.5
   defaultShootForce: 1000
---- !u!50 &510398426
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 510398423}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 6
 --- !u!61 &510398427
 BoxCollider2D:
   m_ObjectHideFlags: 0
