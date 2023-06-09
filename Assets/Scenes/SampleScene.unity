@@ -531,10 +531,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 510398423}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f9a0c8bfdbe34f46a0ab39895110fb2, type: 3}
+  m_Script: {fileID: 11500000, guid: cd592232baf1f6e4baacedd9b7c5d2a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 4823141720530821777, guid: 6b36cddde16b28940a3d2a6547295ec4, type: 3}
   createPoint: {fileID: 1254485818}
   speedScale: 0.5
   defaultShootForce: 1000
