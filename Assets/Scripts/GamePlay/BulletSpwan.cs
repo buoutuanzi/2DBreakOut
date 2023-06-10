@@ -27,7 +27,9 @@ public class BulletSpwan : SingleTon<BulletSpwan>, ObjectPool<GameObject>
   {
     if (pool.Count > 0)
     {
-      return pool.Dequeue();
+      GameObject bullet = pool.Dequeue();
+      bullet.SetActive(true);
+      return bullet;
     }
 
     if (canCreate > 0)
@@ -68,7 +70,13 @@ public class BulletSpwan : SingleTon<BulletSpwan>, ObjectPool<GameObject>
 
   public void Return(GameObject bullet)
   {
+    bullet.transform.position = Vector3.zero;
+    bullet.transform.rotation = Quaternion.identity;
+    bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+    bullet.SetActive(false);
     pool.Enqueue(bullet);
+
+    EventBus.Instance.TriggerEvent(EventType.OnBulletCanBeGet, null);
   }
 
   public void Clear()

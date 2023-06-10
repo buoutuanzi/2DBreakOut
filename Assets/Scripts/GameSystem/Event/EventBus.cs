@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class EventBus : SingleTon<EventBus>
 {
-  Dictionary<EventType, LinkedList<IEventHanlder>> _eventToQueueMap;
+  Dictionary<EventType, LinkedList<IEventHanlder>> _eventToQueueMap = null;
 
   public void RegisteTo(EventType eventType, IEventHanlder callBackObj)
   {
@@ -17,6 +17,10 @@ public class EventBus : SingleTon<EventBus>
     if (queue != null)
     {
       queue.Remove(callBackObj);
+      if (queue.Count <= 0)
+      {
+        RemoveQueue(eventType);
+      }
     }
   }
 
@@ -46,8 +50,35 @@ public class EventBus : SingleTon<EventBus>
 
   private LinkedList<IEventHanlder> GetQueue(EventType eventType)
   {
+    if (_eventToQueueMap == null)
+    {
+      _eventToQueueMap = new Dictionary<EventType, LinkedList<IEventHanlder>>();
+    }
     LinkedList<IEventHanlder> queue;
     _eventToQueueMap.TryGetValue(eventType, out queue);
     return queue;
+  }
+
+  private void RemoveQueue(EventType eventType)
+  {
+    LinkedList<IEventHanlder> queue = GetQueue(eventType);
+    if (queue != null)
+    {
+      queue.Clear();
+      _eventToQueueMap.Remove(eventType);
+    }
+  }
+
+  private void OnDestroy()
+  {
+    if (_eventToQueueMap != null)
+    {
+      foreach (var key in _eventToQueueMap.Keys)
+      {
+        _eventToQueueMap[key].Clear();
+      }
+      _eventToQueueMap.Clear();
+      _eventToQueueMap = null;
+    }
   }
 }
