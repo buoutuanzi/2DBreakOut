@@ -7,7 +7,6 @@ public class Bullet : MonoBehaviour
   private void Awake()
   {
     _rig = GetComponent<Rigidbody2D>();
-    _followTarget = GetComponent<FollowTarget>();
   }
 
   public void Shoot(Vector2 dir, float force)
@@ -15,8 +14,13 @@ public class Bullet : MonoBehaviour
     _rig.AddForce(dir * force);
   }
 
-  public void FollowTransform(Transform targetTransform)
+  private void OnCollisionEnter2D(Collision2D other)
   {
-    _followTarget.Follow(transform);
+    OnHit();
+  }
+
+  private void OnHit()
+  {
+
   }
 }

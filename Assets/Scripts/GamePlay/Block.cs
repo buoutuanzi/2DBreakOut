@@ -7,13 +7,19 @@ public class Block : MonoBehaviour
 
   private void OnCollisionEnter2D(Collision2D other)
   {
-    OnBlockHit?.Invoke();
-    DestroySelf();
+    OnHit();
   }
 
-  void DestroySelf()
+  private void DestroySelf()
   {
     OnBlockHit = null;
     gameObject.SetActive(false);
   }
+
+  private void OnHit()
+  {
+    OnBlockHit?.Invoke();
+    DestroySelf();
+  }
+
 }
