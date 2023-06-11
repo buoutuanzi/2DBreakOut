@@ -1,5 +1,7 @@
 public enum EventType
 {
   OnBulletHit,
-  OnBulletCanBeGet
+  OnBulletCanBeGet,
+  OnBlockDestory,
+  OnLevelComplete
 }

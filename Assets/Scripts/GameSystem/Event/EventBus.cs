@@ -3,20 +3,21 @@ using System.Collections.Generic;
 
 public class EventBus : SingleTon<EventBus>
 {
-  Dictionary<EventType, LinkedList<IEventHanlder>> _eventToQueueMap = null;
+  public delegate void CallBack(Object args);
+  Dictionary<EventType, LinkedList<CallBack>> _eventToQueueMap = null;
 
-  public void RegisteTo(EventType eventType, IEventHanlder callBackObj)
+  public void RegisteTo(EventType eventType, CallBack callBack)
   {
-    LinkedList<IEventHanlder> queue = GetOrAddQueue(eventType);
-    queue.AddLast(callBackObj);
+    LinkedList<CallBack> queue = GetOrAddQueue(eventType);
+    queue.AddLast(callBack);
   }
 
-  public void UnRegisteTo(EventType eventType, IEventHanlder callBackObj)
+  public void UnRegisteTo(EventType eventType, CallBack callBack)
   {
-    LinkedList<IEventHanlder> queue = GetQueue(eventType);
+    LinkedList<CallBack> queue = GetQueue(eventType);
     if (queue != null)
     {
-      queue.Remove(callBackObj);
+      queue.Remove(callBack);
       if (queue.Count <= 0)
       {
         RemoveQueue(eventType);
@@ -26,7 +27,7 @@ public class EventBus : SingleTon<EventBus>
 
   public void TriggerEvent(EventType eventType, Object args)
   {
-    LinkedList<IEventHanlder> queue = GetQueue(eventType);
+    LinkedList<CallBack> queue = GetQueue(eventType);
     if (queue != null)
     {
       foreach (var handler in queue)
@@ -36,32 +37,32 @@ public class EventBus : SingleTon<EventBus>
     }
   }
 
-  private LinkedList<IEventHanlder> GetOrAddQueue(EventType eventType)
+  private LinkedList<CallBack> GetOrAddQueue(EventType eventType)
   {
-    LinkedList<IEventHanlder> queue = GetQueue(eventType);
+    LinkedList<CallBack> queue = GetQueue(eventType);
     if (queue == null)
     {
-      queue = new LinkedList<IEventHanlder>();
+      queue = new LinkedList<CallBack>();
       _eventToQueueMap.Add(eventType, queue);
     }
 
     return queue;
   }
 
-  private LinkedList<IEventHanlder> GetQueue(EventType eventType)
+  private LinkedList<CallBack> GetQueue(EventType eventType)
   {
     if (_eventToQueueMap == null)
     {
-      _eventToQueueMap = new Dictionary<EventType, LinkedList<IEventHanlder>>();
+      _eventToQueueMap = new Dictionary<EventType, LinkedList<CallBack>>();
     }
-    LinkedList<IEventHanlder> queue;
+    LinkedList<CallBack> queue;
     _eventToQueueMap.TryGetValue(eventType, out queue);
     return queue;
   }
 
   private void RemoveQueue(EventType eventType)
   {
-    LinkedList<IEventHanlder> queue = GetQueue(eventType);
+    LinkedList<CallBack> queue = GetQueue(eventType);
     if (queue != null)
     {
       queue.Clear();

@@ -10,6 +10,7 @@ public class Block : MonoBehaviour
 
   private void DestroySelf()
   {
+    EventBus.Instance.TriggerEvent(EventType.OnBlockDestory, null);
     gameObject.SetActive(false);
   }
 

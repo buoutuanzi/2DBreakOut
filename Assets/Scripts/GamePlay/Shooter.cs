@@ -36,7 +36,7 @@ public class Shooter : MonoBehaviour, IEventHanlder
   {
     if (_isWaitingBullet)
     {
-      EventBus.Instance.UnRegisteTo(EventType.OnBulletCanBeGet, this);
+      EventBus.Instance.UnRegisteTo(EventType.OnBulletCanBeGet, OnBulletCanBeGet);
     }
   }
 
@@ -68,7 +68,7 @@ public class Shooter : MonoBehaviour, IEventHanlder
       }
       else
       {
-        EventBus.Instance.RegisteTo(EventType.OnBulletCanBeGet, this);
+        EventBus.Instance.RegisteTo(EventType.OnBulletCanBeGet, OnBulletCanBeGet);
         _isWaitingBullet = true;
       }
     }
@@ -106,10 +106,15 @@ public class Shooter : MonoBehaviour, IEventHanlder
     return false;
   }
 
-  public void Invoke(object args)
+  public void OnBulletCanBeGet(object args)
   {
-    EventBus.Instance.UnRegisteTo(EventType.OnBulletCanBeGet, this);
+    EventBus.Instance.UnRegisteTo(EventType.OnBulletCanBeGet, OnBulletCanBeGet);
     GetBullet();
     _isWaitingBullet = false;
+  }
+
+  public void Invoke(object args)
+  {
+    throw new System.NotImplementedException();
   }
 }
