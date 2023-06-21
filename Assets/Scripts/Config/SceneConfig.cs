@@ -1,6 +1,7 @@
 public class SceneConfig
 {
-
+  public const string ENDSCENENAME = "EndScene";
+  public const string STARTSCENENAME = "StartScene";
   private static string[] _LevelSceneList = new string[]{
     "LEVELSCENE_1",
     };
@@ -9,7 +10,7 @@ public class SceneConfig
   {
     if (levelIndex >= _LevelSceneList.Length || levelIndex < 0)
     {
-      return "ENDSCENE";
+      return null;
     }
 
     return _LevelSceneList[levelIndex];

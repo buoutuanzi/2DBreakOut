@@ -1,26 +1,32 @@
-using UnityEngine.SceneManagement;
 public class LevelMgr : SingleTon<LevelMgr>
 {
+
   private int _curLevelIndex = -1;
   private void Awake()
   {
     EventBus.Instance.RegisteTo(EventType.OnLevelComplete, ToNextLevel);
   }
 
-  public void SwitchLevel(int levelIndex)
+  public bool SwitchLevel(int levelIndex)
   {
-    if (_curLevelIndex == levelIndex)
+    string targetSceneName = SceneConfig.GetLevelSceneNameByIndex(levelIndex);
+    if (targetSceneName == null)
     {
-      return;
+      return false;
     }
 
-    SceneManager.LoadScene(SceneConfig.GetLevelSceneNameByIndex(levelIndex), LoadSceneMode.Single);
+    SceneMgr.Instance.SwitchScene(targetSceneName);
     _curLevelIndex = levelIndex;
+
+    return true;
   }
 
   public void ToNextLevel(object args)
   {
-    SwitchLevel(_curLevelIndex + 1);
+    if (!SwitchLevel(_curLevelIndex + 1))
+    {
+      SceneMgr.Instance.SwitchScene(SceneConfig.ENDSCENENAME);
+    }
   }
 
   private void OnDestroy()
