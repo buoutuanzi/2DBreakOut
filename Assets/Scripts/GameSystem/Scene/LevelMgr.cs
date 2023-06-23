@@ -17,7 +17,7 @@ public class LevelMgr : SingleTon<LevelMgr>
 
     SceneMgr.Instance.SwitchScene(targetSceneName);
     _curLevelIndex = levelIndex;
-
+    EventBus.Instance.TriggerEvent(EventType.OnLevelBegin, null);
     return true;
   }
 

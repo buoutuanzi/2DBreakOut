@@ -8,11 +8,11 @@ public class GameStaticsModel : Model
 
   public override void Init()
   {
-    InitData();
+    InitData(null);
     BindEvents();
   }
 
-  private void InitData()
+  private void InitData(object args)
   {
     GameObject blockRoot = GameObject.Find(BLOCK_ROOT_NAME);
     _leftBlock = blockRoot.transform.childCount;
@@ -22,6 +22,7 @@ public class GameStaticsModel : Model
   private void BindEvents()
   {
     EventBus.Instance.RegisteTo(EventType.OnBlockDestory, MinusBlock);
+    EventBus.Instance.RegisteTo(EventType.OnLevelBegin, InitData);
   }
 
   public void MinusBlock(object args)
