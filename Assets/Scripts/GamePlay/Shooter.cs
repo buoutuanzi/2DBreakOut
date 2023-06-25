@@ -1,7 +1,7 @@
 using UnityEngine;
 
 // 负责子弹发射相关功能
-public class Shooter : MonoBehaviour, IEventHanlder
+public class Shooter : MonoBehaviour
 {
   [SerializeField]
   private Transform createPoint;

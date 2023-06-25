@@ -3,7 +3,6 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
   Rigidbody2D _rig;
-  FollowTarget _followTarget;
   private void Awake()
   {
     _rig = GetComponent<Rigidbody2D>();
