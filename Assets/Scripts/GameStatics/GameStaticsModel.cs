@@ -25,7 +25,7 @@ public class GameStaticsModel : Model
     EventBus.Instance.RegisteTo(EventType.OnLevelBegin, InitData);
   }
 
-  public void MinusBlock(object args)
+  private void MinusBlock(object args)
   {
     _leftBlock--;
 

@@ -18,10 +18,12 @@ public class Shooter : MonoBehaviour
   private Vector2 defaultShootDir = new Vector2(0, 1);
   public float defaultShootForce = 10f;
   private Vector3 _lastFramePos;
+  private float collisionHalfWidth = 0;
 
   private void Awake()
   {
     _rig = GetComponent<Rigidbody2D>();
+    collisionHalfWidth = GetComponent<BoxCollider2D>().size.x / 2;
   }
 
   // Update is called once per frame
@@ -42,7 +44,7 @@ public class Shooter : MonoBehaviour
 
   private void HandleMovment()
   {
-    Vector2 mouseWorldPos = GameUtils.GetMouseWorldPosClampByScreen();
+    Vector2 mouseWorldPos = GameUtils.GetMouseWorldPosClampByScreen(collisionHalfWidth / 2, collisionHalfWidth / 2);
     Vector3 oldPos = transform.position;
     Vector3 newPos = new Vector2(mouseWorldPos.x, oldPos.y);
     transform.position = newPos;
@@ -99,7 +101,6 @@ public class Shooter : MonoBehaviour
     if (bullet != null)
     {
       _curBullet = bullet.GetComponent<Bullet>();
-      Debug.Log("获得子弹");
       return true;
     }
 
@@ -113,8 +114,4 @@ public class Shooter : MonoBehaviour
     _isWaitingBullet = false;
   }
 
-  public void Invoke(object args)
-  {
-    throw new System.NotImplementedException();
-  }
 }

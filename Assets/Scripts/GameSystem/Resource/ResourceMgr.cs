@@ -4,51 +4,51 @@ using UnityEngine;
 // 防止重复加载，统一通过这个Mgr加载资源
 public class ResourceMgr : SingleTon<ResourceMgr>
 {
-  Dictionary<string, Object> resourceCacheByPath;
-  Dictionary<string, int> resourceRefCounter;
+  private Dictionary<string, Object> _resourceCacheByPath;
+  private Dictionary<string, int> _resourceRefCounter;
 
-  IResourceLoader resourceLoader;
+  private IResourceLoader _resourceLoader;
 
   private void Awake()
   {
-    resourceCacheByPath = new Dictionary<string, Object>();
-    resourceRefCounter = new Dictionary<string, int>();
-    resourceLoader = new ResouceFolderLoader();
+    _resourceCacheByPath = new Dictionary<string, Object>();
+    _resourceRefCounter = new Dictionary<string, int>();
+    _resourceLoader = new ResouceFolderLoader();
   }
 
   public Object LoadFromPath(string path)
   {
     Object resource = null;
-    if (resourceCacheByPath.ContainsKey(path))
+    if (_resourceCacheByPath.ContainsKey(path))
     {
-      resource = resourceCacheByPath[path];
+      resource = _resourceCacheByPath[path];
     }
     else
     {
-      resource = resourceLoader.LoadFromPath(path);
-      resourceCacheByPath.Add(path, resource);
-      resourceRefCounter.Add(path, 0);
+      resource = _resourceLoader.LoadFromPath(path);
+      _resourceCacheByPath.Add(path, resource);
+      _resourceRefCounter.Add(path, 0);
     }
 
-    resourceRefCounter[path]++;
+    _resourceRefCounter[path]++;
 
     return resource;
   }
 
   public void ReleaseByPath(string path)
   {
-    if (--resourceRefCounter[path] <= 0)
+    if (--_resourceRefCounter[path] <= 0)
     {
-      resourceRefCounter.Remove(path);
+      _resourceRefCounter.Remove(path);
       Object resource;
-      resourceCacheByPath.Remove(path, out resource);
-      resourceLoader.Release(resource);
+      _resourceCacheByPath.Remove(path, out resource);
+      _resourceLoader.Release(resource);
     }
   }
 
   void ReleaseAll()
   {
-    foreach (var res in resourceCacheByPath)
+    foreach (var res in _resourceCacheByPath)
     {
       ReleaseByPath(res.Key);
     }
