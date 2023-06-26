@@ -20,6 +20,6 @@ public class Bullet : MonoBehaviour
 
   private void OnHit()
   {
-
+    return;
   }
 }
