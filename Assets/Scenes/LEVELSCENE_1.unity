@@ -734,6 +734,7 @@ GameObject:
   - component: {fileID: 510398427}
   - component: {fileID: 510398425}
   - component: {fileID: 510398428}
+  - component: {fileID: 510398429}
   m_Layer: 0
   m_Name: Shooter
   m_TagString: Untagged
@@ -810,6 +811,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 01d5db23734ac3e4b9c6a1bf6f71b936, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &510398429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 510398423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dc8b480e0b519a4db467ea1e55160ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &519420028
