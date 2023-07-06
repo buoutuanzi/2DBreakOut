@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class BulletSpwan : SingleTon<BulletSpwan>, ObjectPool<GameObject>
+public class BulletSpwan : SingleTon<BulletSpwan>, IObjectPool<GameObject>
 {
   int canCreate = 10;
 
@@ -11,7 +11,7 @@ public class BulletSpwan : SingleTon<BulletSpwan>, ObjectPool<GameObject>
 
   public GameObject GetAndAttachTo(Transform parentTransform)
   {
-    GameObject bullet = Spwan();
+    GameObject bullet = Spawn();
     if (bullet != null)
     {
       bullet.transform.SetParent(parentTransform);
@@ -23,7 +23,7 @@ public class BulletSpwan : SingleTon<BulletSpwan>, ObjectPool<GameObject>
 
   }
 
-  public GameObject Spwan()
+  public GameObject Spawn()
   {
     if (pool.Count > 0)
     {

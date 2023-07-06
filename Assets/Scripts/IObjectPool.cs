@@ -1,6 +1,6 @@
-public interface ObjectPool<T>
+public interface IObjectPool<T>
 {
-  public T Spwan();
+  public T Spawn();
 
   public void Return(T t);
 

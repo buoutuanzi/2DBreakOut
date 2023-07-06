@@ -17,19 +17,18 @@ public class Shooter : MonoBehaviour
   private Rigidbody2D _rig;
   private Vector2 defaultShootDir = new Vector2(0, 1);
   public float defaultShootForce = 10f;
-  private Vector3 _lastFramePos;
-  private float collisionHalfWidth = 0;
+
+  private ShooterMover _mover;
 
   private void Awake()
   {
     _rig = GetComponent<Rigidbody2D>();
-    collisionHalfWidth = GetComponent<BoxCollider2D>().size.x / 2;
+    _mover = GetComponent<ShooterMover>();
   }
 
   // Update is called once per frame
   private void Update()
   {
-    HandleMovment();
     HandleCreateBullet();
     HandleShoot();
   }
@@ -40,15 +39,6 @@ public class Shooter : MonoBehaviour
     {
       EventBus.Instance.UnRegisteTo(EventType.OnBulletCanBeGet, OnBulletCanBeGet);
     }
-  }
-
-  private void HandleMovment()
-  {
-    Vector2 mouseWorldPos = GameUtils.GetMouseWorldPosClampByScreen(collisionHalfWidth / 2, collisionHalfWidth / 2);
-    Vector3 oldPos = transform.position;
-    Vector3 newPos = new Vector2(mouseWorldPos.x, oldPos.y);
-    transform.position = newPos;
-    _lastFramePos = oldPos;
   }
 
   private void HandleCreateBullet()
@@ -86,7 +76,7 @@ public class Shooter : MonoBehaviour
 
   private void Shoot()
   {
-    Vector2 velocity = ((transform.position - _lastFramePos) / Time.deltaTime) * speedScale;
+    Vector2 velocity = ((transform.position - _mover.LastFramePos) / Time.deltaTime) * speedScale;
     Vector2 shootDir = (defaultShootDir + velocity).normalized;
     float force = defaultShootForce;
     // 取消子弹跟随
