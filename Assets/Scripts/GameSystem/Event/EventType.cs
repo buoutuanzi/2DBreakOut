@@ -4,5 +4,6 @@ public enum EventType
   OnBulletCanBeGet,
   OnBlockDestory,
   OnLevelComplete,
-  OnLevelBegin
+  OnLevelBegin,
+  OnBuffTrigger
 }
