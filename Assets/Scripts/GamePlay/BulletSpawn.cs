@@ -9,6 +9,8 @@ public class BulletSpawn : SingleTon<BulletSpawn>, IObjectPool<GameObject>
   string prefabPath = "Prefabs/Bullet";
   GameObject bulletPrefab;
 
+  public HashSet<GameObject> activeBulletSet = new HashSet<GameObject>();
+
   public GameObject GetAndAttachTo(Transform parentTransform)
   {
     GameObject bullet = Spawn();
@@ -20,7 +22,6 @@ public class BulletSpawn : SingleTon<BulletSpawn>, IObjectPool<GameObject>
     }
 
     return bullet;
-
   }
 
   public GameObject Spawn()
@@ -29,6 +30,7 @@ public class BulletSpawn : SingleTon<BulletSpawn>, IObjectPool<GameObject>
     {
       GameObject bullet = pool.Dequeue();
       bullet.SetActive(true);
+      activeBulletSet.Add(bullet);
       return bullet;
     }
 
@@ -42,6 +44,7 @@ public class BulletSpawn : SingleTon<BulletSpawn>, IObjectPool<GameObject>
       {
         GameObject go = Instantiate(bulletPrefab, Vector3.zero, Quaternion.identity);
         canCreate--;
+        activeBulletSet.Add(go);
         return go;
       }
 
@@ -74,6 +77,7 @@ public class BulletSpawn : SingleTon<BulletSpawn>, IObjectPool<GameObject>
     bullet.transform.rotation = Quaternion.identity;
     bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     bullet.SetActive(false);
+    activeBulletSet.Remove(bullet);
     pool.Enqueue(bullet);
 
     EventBus.Instance.TriggerEvent(EventType.OnBulletCanBeGet, null);
@@ -81,6 +85,10 @@ public class BulletSpawn : SingleTon<BulletSpawn>, IObjectPool<GameObject>
 
   public void Clear()
   {
+    foreach(var bullet in activeBulletSet)
+    {
+        DestroyImmediate(bullet);
+    }
     while (pool.Count > 0)
     {
       GameObject go = pool.Dequeue();
