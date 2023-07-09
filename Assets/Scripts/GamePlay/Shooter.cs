@@ -87,7 +87,7 @@ public class Shooter : MonoBehaviour
 
   private bool GetBullet()
   {
-    GameObject bullet = BulletSpwan.Instance.GetAndAttachTo(createPoint);
+    GameObject bullet = BulletSpawn.Instance.GetAndAttachTo(createPoint);
     if (bullet != null)
     {
       _curBullet = bullet.GetComponent<Bullet>();

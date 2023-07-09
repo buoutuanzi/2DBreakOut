@@ -4,9 +4,10 @@ public class DeadZone : MonoBehaviour
 {
   private void OnCollisionEnter2D(Collision2D other)
   {
-    if (other.gameObject.GetComponent<Bullet>())
+    IReuseableItem reuseable = other.gameObject.GetComponent<IReuseableItem>();
+    if (reuseable != null)
     {
-      BulletSpwan.Instance.Return(other.gameObject);
+       reuseable.Return();
     }
   }
 }

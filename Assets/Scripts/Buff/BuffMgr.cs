@@ -7,7 +7,7 @@ public class BuffMgr : MonoBehaviour
 {
     private Dictionary<BuffType, IBuff> _buffType2BuffMap = new Dictionary<BuffType, IBuff>()
     {
-
+        { BuffType.ChangePanelLen , new ChangePanelLenBuff()}
     };
 
     private List<IBuff> _activeBuff = new List<IBuff>();
@@ -25,10 +25,14 @@ public class BuffMgr : MonoBehaviour
             Debug.LogError("Buff 触发参数错误");
         }
         BuffTriggerArgs triggerArgs = args as BuffTriggerArgs;
-
+        Debug.Log("Buff 触发，Type: " + triggerArgs.buffType);
         IBuff triggerBuff = _buffType2BuffMap[triggerArgs.buffType];
-        _activeBuff.Add(triggerBuff);
-        triggerBuff.Trigger();
+        if (!_activeBuff.Contains(triggerBuff))
+        {
+            _activeBuff.Add(triggerBuff);
+        }
+        
+        triggerBuff.Trigger(triggerArgs);
     }
 
     private void OnLevelComplete(object args)

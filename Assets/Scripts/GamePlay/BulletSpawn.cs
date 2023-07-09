@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class BulletSpwan : SingleTon<BulletSpwan>, IObjectPool<GameObject>
+public class BulletSpawn : SingleTon<BulletSpawn>, IObjectPool<GameObject>
 {
   int canCreate = 10;
 

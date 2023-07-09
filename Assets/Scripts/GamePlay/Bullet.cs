@@ -1,9 +1,10 @@
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : Collidable, IReuseableItem
 {
   Rigidbody2D _rig;
-  private void Awake()
+    private float DirScale = 4.0f;
+    private void Awake()
   {
     _rig = GetComponent<Rigidbody2D>();
   }
@@ -22,4 +23,24 @@ public class Bullet : MonoBehaviour
   {
     return;
   }
+
+    public void Return()
+    {
+        BulletSpawn.Instance.Return(gameObject);
+    }
+
+    public override void OnCollidableExit(CollisionPannel other)
+    {
+        ReflectBulletByRefPos(other);
+    }
+
+    private void ReflectBulletByRefPos(CollisionPannel other)
+    {
+        float diffX = transform.position.x - other.transform.position.x;
+        Vector2 BiasVec = new Vector2(diffX * DirScale, 0);
+        Vector2 oldVelocityDir = _rig.velocity;
+        float velocityMag = oldVelocityDir.magnitude;
+        Vector2 newVelocityDir = (oldVelocityDir + BiasVec).normalized;
+        _rig.velocity = newVelocityDir * velocityMag;
+    }
 }
