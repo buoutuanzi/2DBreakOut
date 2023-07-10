@@ -58,6 +58,7 @@ public class RandomBuffItemSpawn : SingleTon<RandomBuffItemSpawn>, IObjectPool<G
     {
         GameObject go = Spawn();
         SetRandomBuff(go);
+        go.GetComponent<BuffCollectableVisual>().UpdateVisual();
         go.transform.SetPositionAndRotation(pos, Quaternion.identity);
     }
 
@@ -77,6 +78,7 @@ public class RandomBuffItemSpawn : SingleTon<RandomBuffItemSpawn>, IObjectPool<G
         item.transform.position = Vector3.zero;
         item.transform.rotation = Quaternion.identity;
         item.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        item.GetComponent<BuffCollectable>().args = null;
         item.SetActive(false);
         pool.Enqueue(item);
     }

@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 2903645185210967073}
   - component: {fileID: 7984589509940031747}
   - component: {fileID: -6029384677235014074}
+  - component: {fileID: 7141862429817181604}
   m_Layer: 8
   m_Name: BuffItem
   m_TagString: Untagged
@@ -112,8 +113,8 @@ Transform:
   m_GameObject: {fileID: 3305316746997367853}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4837909216805147778}
   m_Father: {fileID: 0}
@@ -179,3 +180,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buffType: 0
+--- !u!114 &7141862429817181604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3305316746997367853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8b5c59b2507854089806aa256499d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemSpriteRenderer: {fileID: 2843768153860976573}

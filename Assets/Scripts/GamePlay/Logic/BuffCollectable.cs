@@ -5,7 +5,7 @@ using UnityEngine;
 public class BuffCollectable : Collidable, IReuseableItem
 {
     public BuffType buffType;
-    public object args;
+    public object args = null;
     public override void OnCollidableEnter(CollisionPannel other)
     {
         BuffTriggerArgs buffTriggerArgs = new BuffTriggerArgs(buffType, args);
