@@ -11,24 +11,24 @@ public class BuffGenerationConfig : MonoBehaviour
         { BuffType.ChangePanelLen, new float[]{0.5f, 2} },
     };
 
-    public static bool isHasConfig(BuffType buffType)
+    public static bool IsHasConfig(BuffType buffType)
     {
         return _buffArgsConfig.ContainsKey(buffType);
     }
 
-    public static float getMinValue(BuffType buffType)
+    public static float GetMinValue(BuffType buffType)
     {
-        float[] minMaxConfig = getMinMaxValue(buffType);
+        float[] minMaxConfig = GetMinMaxValue(buffType);
         return minMaxConfig[0];
     }
 
-    public static float getMaxValue(BuffType buffType)
+    public static float GetMaxValue(BuffType buffType)
     {
-        float[] minMaxConfig = getMinMaxValue(buffType);
+        float[] minMaxConfig = GetMinMaxValue(buffType);
         return minMaxConfig[minMaxConfig.Length - 1];
     }
 
-    public static float[] getMinMaxValue(BuffType buffType)
+    public static float[] GetMinMaxValue(BuffType buffType)
     {
         if (!_buffArgsConfig.ContainsKey(buffType))
         {

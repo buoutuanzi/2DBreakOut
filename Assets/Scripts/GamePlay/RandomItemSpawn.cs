@@ -64,7 +64,7 @@ public class RandomItemSpawn : SingleTon<RandomItemSpawn>, IObjectPool<GameObjec
     {
         BuffCollectable buffCollectable = item.GetComponent<BuffCollectable>();
         BuffType buffType = BuffUtils.GetARandomBuffType();
-        if (BuffGenerationConfig.isHasConfig(buffType))
+        if (BuffGenerationConfig.IsHasConfig(buffType))
         {
             float args = BuffUtils.GetARandomBuffArgs(buffType);
             buffCollectable.args = args;

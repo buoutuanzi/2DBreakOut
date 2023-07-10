@@ -16,13 +16,13 @@ public class BuffUtils
 
     public static float GetARandomBuffArgs(BuffType buffType)
     {
-        if (!BuffGenerationConfig.isHasConfig(buffType))
+        if (!BuffGenerationConfig.IsHasConfig(buffType))
         {
             Debug.LogWarning("该Buff没有配置参数生成配置，Type: " + buffType);
             return 0f;
         }
 
-        float[] minMaxConfig = BuffGenerationConfig.getMinMaxValue(buffType);
+        float[] minMaxConfig = BuffGenerationConfig.GetMinMaxValue(buffType);
         return UnityEngine.Random.Range(minMaxConfig[0], minMaxConfig[minMaxConfig.Length - 1]);
     }
 }

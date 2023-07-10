@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-    private float DropItemChance = 0.8f;
+    private float DropItemChance = 0.4f;
   private void OnCollisionEnter2D(Collision2D other)
   {
     OnHit();
