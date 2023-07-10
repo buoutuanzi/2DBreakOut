@@ -4,6 +4,6 @@ using UnityEngine;
 
 public enum BuffType
 {
-    ChangeBullectVelocity,
+    ChangeBulletVelocity,
     ChangePanelLen
 }

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 随机生成Buff时可以使用此配置文件配置buff的参数生成配置
-public class BuffGenerationConfig : MonoBehaviour
+public class BuffGenerationConfig
 {
     static Dictionary<BuffType, object> _buffArgsConfig = new Dictionary<BuffType, object>()
     {
-        { BuffType.ChangeBullectVelocity, new float[]{0.5f, 2} },
+        { BuffType.ChangeBulletVelocity, new float[]{0.5f, 2} },
         { BuffType.ChangePanelLen, new float[]{0.5f, 2} },
     };
 

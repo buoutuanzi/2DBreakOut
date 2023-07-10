@@ -5,7 +5,7 @@ public class BuffCollectableVisualConfig
 {
     static Dictionary<BuffType, Color> _buffType2VisualColor = new Dictionary<BuffType, Color>()
     {
-        { BuffType.ChangeBullectVelocity, Color.blue},
+        { BuffType.ChangeBulletVelocity, Color.blue},
         { BuffType.ChangePanelLen, Color.green}
     };
 
