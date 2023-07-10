@@ -7,7 +7,8 @@ public class BuffMgr : MonoBehaviour
 {
     private Dictionary<BuffType, IBuff> _buffType2BuffMap = new Dictionary<BuffType, IBuff>()
     {
-        { BuffType.ChangePanelLen , new ChangePanelLenBuff()}
+        { BuffType.ChangePanelLen , new ChangePanelLenBuff()},
+        { BuffType.ChangeBullectVelocity , new ChangeBulletVelocityBuff()}
     };
 
     private List<IBuff> _activeBuff = new List<IBuff>();

@@ -61,7 +61,7 @@ public class RandomItemSpawn : SingleTon<RandomItemSpawn>, IObjectPool<GameObjec
     private void SetRandomBuff(GameObject item)
     {
         BuffCollectable buffCollectable = item.GetComponent<BuffCollectable>();
-        buffCollectable.buffType = BuffType.ChangePanelLen;
+        buffCollectable.buffType = BuffType.ChangeBullectVelocity;
         buffCollectable.args = 2f;
     }
     public void Return(GameObject item)
