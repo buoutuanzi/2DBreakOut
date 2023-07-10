@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using System;
 
 public class RandomItemSpawn : SingleTon<RandomItemSpawn>, IObjectPool<GameObject>
 {
@@ -61,8 +63,13 @@ public class RandomItemSpawn : SingleTon<RandomItemSpawn>, IObjectPool<GameObjec
     private void SetRandomBuff(GameObject item)
     {
         BuffCollectable buffCollectable = item.GetComponent<BuffCollectable>();
-        buffCollectable.buffType = BuffType.ChangeBullectVelocity;
-        buffCollectable.args = 2f;
+        BuffType buffType = BuffUtils.GetARandomBuffType();
+        if (BuffGenerationConfig.isHasConfig(buffType))
+        {
+            float args = BuffUtils.GetARandomBuffArgs(buffType);
+            buffCollectable.args = args;
+        }
+        buffCollectable.buffType = buffType;
     }
     public void Return(GameObject item)
     {
