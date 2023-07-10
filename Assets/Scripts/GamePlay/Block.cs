@@ -17,10 +17,11 @@ public class Block : MonoBehaviour
 
     private void RandomDropItem()
     {
-        float chance = Random.Range(0,1);
+        float chance = Random.Range(0f,1f);
+        Debug.Log("本次生成概率为：" + chance);
         if(chance <= DropItemChance)
         {
-            RandomItemSpawn.Instance.SpawnByPosition(transform.position);
+            RandomBuffItemSpawn.Instance.SpawnByPosition(transform.position);
         }
     }
 

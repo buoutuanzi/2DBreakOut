@@ -4,7 +4,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System;
 
-public class RandomItemSpawn : SingleTon<RandomItemSpawn>, IObjectPool<GameObject>
+// 随机生成碰到后产生特殊效果的物体
+public class RandomBuffItemSpawn : SingleTon<RandomBuffItemSpawn>, IObjectPool<GameObject>
 {
     const string ItemPath = "Prefabs/BuffItem";
     private GameObject ItemPrefab;

@@ -37,6 +37,11 @@ public class ResourceMgr : SingleTon<ResourceMgr>
 
   public void ReleaseByPath(string path)
   {
+    if (!_resourceCacheByPath.ContainsKey(path))
+    {
+        return;
+    }
+
     if (--_resourceRefCounter[path] <= 0)
     {
       _resourceRefCounter.Remove(path);
@@ -48,12 +53,18 @@ public class ResourceMgr : SingleTon<ResourceMgr>
 
   void ReleaseAll()
   {
+    List<Object> resourceToRelease = new List<Object>();
     foreach (var res in _resourceCacheByPath)
     {
-      ReleaseByPath(res.Key);
+      resourceToRelease.Add(res.Value);
+    }
+    foreach(var res in resourceToRelease)
+    {
+        _resourceLoader.Release(res);
     }
 
-
+    _resourceCacheByPath.Clear();
+    _resourceRefCounter.Clear();
   }
 
   private void OnDestroy()
