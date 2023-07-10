@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 每个buff类实现一类buff功能，每个buff类可以重复触发
-public class ChangePanelLenBuff : IBuff
+public class ChangePannelLenBuff : IBuff
 {
     private float curScale = 1;
-    const string PannelPath = "GameView/Shooter";
+    const string pannelPath = "GameView/Shooter";
     private GameObject pannel = null;
     private float maxScale = 2;
     private float minScale = 0.5f;
@@ -29,7 +29,7 @@ public class ChangePanelLenBuff : IBuff
     {
         if(pannel == null)
         {
-            pannel = GameObject.Find(PannelPath);
+            pannel = GameObject.Find(pannelPath);
             logicPannel = pannel.GetComponent<CollisionPannel>();
             visualPannel = pannel.GetComponent<CollisionPannelVisual>();
         }
