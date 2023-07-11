@@ -47,8 +47,7 @@ public class ChangeBulletVelocityBuff : IBuff
         float deltaScale = curSpeedScale / oldScale;
         foreach (var bullet in BulletSpawn.Instance.activeBulletSet)
         {
-            Rigidbody2D rigBullet = bullet.GetComponent<Rigidbody2D>();
-            rigBullet.velocity = rigBullet.velocity * deltaScale;
+            bullet.GetComponent<Bullet>().SetVelocityByScaleRefNow(deltaScale);
         }
     }
 }

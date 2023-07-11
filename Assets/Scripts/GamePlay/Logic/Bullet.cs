@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Bullet : Collidable, IReuseableItem
 {
-  Rigidbody2D _rig;
+    Rigidbody2D _rig;
     private float DirScale = 4.0f;
     private void Awake()
   {
@@ -42,5 +42,9 @@ public class Bullet : Collidable, IReuseableItem
         float velocityMag = oldVelocityDir.magnitude;
         Vector2 newVelocityDir = (oldVelocityDir + BiasVec).normalized;
         _rig.velocity = newVelocityDir * velocityMag;
+    }
+
+    public void SetVelocityByScaleRefNow(float scale){
+        _rig.velocity = _rig.velocity * scale;
     }
 }
