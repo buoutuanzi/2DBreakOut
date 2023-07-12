@@ -19,6 +19,7 @@ public class ChangeBulletVelocityBuff : IBuff
     public void Reset()
     {
         UpdateVelocityByScale(1 / curSpeedScale);
+        shooter = null;
     }
 
     public void Trigger(BuffTriggerArgs args)

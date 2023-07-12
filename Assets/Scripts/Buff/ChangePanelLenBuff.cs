@@ -22,6 +22,7 @@ public class ChangePannelLenBuff : IBuff
         if(pannel != null)
         {
             SetPannelLen(1);
+            pannel = null;
         }
     }
 

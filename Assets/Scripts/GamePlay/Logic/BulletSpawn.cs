@@ -11,6 +11,25 @@ public class BulletSpawn : SingleTon<BulletSpawn>, IObjectPool<GameObject>
 
   public HashSet<GameObject> activeBulletSet = new HashSet<GameObject>();
 
+    private void Awake()
+    {
+        EventBus.Instance.RegisteTo(EventType.OnLevelComplete, CollectAllActiveBullet);
+    }
+
+    private void CollectAllActiveBullet(object args)
+    {
+        List<GameObject> toBeCollected = new List<GameObject>();
+        foreach(GameObject bullet in activeBulletSet)
+        {
+            toBeCollected.Add(bullet);
+        }
+        for(int i = 0; i < toBeCollected.Count; i++)
+        {
+            Return(toBeCollected[i]);
+        }
+        activeBulletSet.Clear();
+    }
+
     public GameObject GetAndAttachTo(Transform parentTransform)
   {
     GameObject bullet = Spawn();
