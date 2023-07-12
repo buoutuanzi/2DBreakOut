@@ -1,10 +1,12 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+
 public class GameStaticsModel : Model
 {
   private int _leftBlock;
-  const string BLOCK_ROOT_NAME = "Blocks";
+  const string BLOCK_ROOT_NAME = "/GameView/Blocks";
 
   public override void Init()
   {
@@ -25,13 +27,19 @@ public class GameStaticsModel : Model
     EventBus.Instance.RegisteTo(EventType.OnLevelBegin, InitData);
   }
 
+    private void UnBindEvents()
+    {
+        EventBus.Instance.UnRegisteTo(EventType.OnBlockDestory, MinusBlock);
+        EventBus.Instance.UnRegisteTo(EventType.OnLevelBegin, InitData);
+    }
+
   private void MinusBlock(object args)
   {
     _leftBlock--;
 
     UpdateData();
 
-    if (_leftBlock == 0)
+    if (_leftBlock <= 0)
     {
       EventBus.Instance.TriggerEvent(EventType.OnLevelComplete, null);
     }
@@ -43,4 +51,9 @@ public class GameStaticsModel : Model
         {GameStaticsEnum.LeftBlockValue, _leftBlock}
     });
   }
+
+    public override void OnDestroy()
+    {
+        UnBindEvents();
+    }
 }

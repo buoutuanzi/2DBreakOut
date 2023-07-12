@@ -11,7 +11,7 @@ public class BulletSpawn : SingleTon<BulletSpawn>, IObjectPool<GameObject>
 
   public HashSet<GameObject> activeBulletSet = new HashSet<GameObject>();
 
-  public GameObject GetAndAttachTo(Transform parentTransform)
+    public GameObject GetAndAttachTo(Transform parentTransform)
   {
     GameObject bullet = Spawn();
     if (bullet != null)
@@ -77,6 +77,7 @@ public class BulletSpawn : SingleTon<BulletSpawn>, IObjectPool<GameObject>
     bullet.transform.rotation = Quaternion.identity;
     bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     bullet.SetActive(false);
+    bullet.transform.SetParent(transform);
     activeBulletSet.Remove(bullet);
     pool.Enqueue(bullet);
 
@@ -94,7 +95,13 @@ public class BulletSpawn : SingleTon<BulletSpawn>, IObjectPool<GameObject>
       GameObject go = pool.Dequeue();
       DestroyImmediate(go);
     }
+    pool.Clear();
   }
+
+  private void OnLevelComplete(object args)
+    {
+        Clear();
+    }
 
   private void OnDestroy()
   {

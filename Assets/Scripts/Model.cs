@@ -8,4 +8,6 @@ public abstract class Model
     _controller = controller;
   }
 
+  public abstract void OnDestroy();
+
 }

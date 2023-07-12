@@ -27,7 +27,7 @@ public class GameEndUI : MonoBehaviour
 
   private void RetunrToMainMenu()
   {
-    SceneMgr.Instance.SwitchScene(SceneConfig.STARTSCENENAME);
+    SceneMgr.Instance.SwitchScene(SceneConfig.STARTSCENENAME, null);
   }
 
   private void OnDestroy()

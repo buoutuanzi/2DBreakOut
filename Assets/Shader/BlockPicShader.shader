@@ -3,8 +3,10 @@ Shader "Unlit/BlockPicShader"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _AreaWidth("图片显示区域占ViewPort的大小，从左往右", float) = 1
+        _AreaWidth("图片显示区域占ViewPort的大小，从左往右", float) = 0.7
         _AreaHeight ("图片显示区域占ViewPort的大小，从上往下", float) = 0.5
+        _OffsetX("X轴偏移的ViewPort坐标", float) = 0.3
+        _OffsetY("Y轴偏移的ViewPort坐标", float) = 0.3
     }
     SubShader
     {
@@ -33,6 +35,8 @@ Shader "Unlit/BlockPicShader"
             float4 _MainTex_ST;
             fixed _AreaWidth;
             fixed _AreaHeight;
+            fixed _OffsetX;
+            fixed _OffsetY;
 
             v2f vert (appdata v)
             {
@@ -46,8 +50,9 @@ Shader "Unlit/BlockPicShader"
             {
                 half2 uv;
                 half2 pos = i.screenPos.xy / i.screenPos.w;
-                uv.x = pos.x / _AreaWidth;
-                uv.y = (pos.y - (1 - _AreaHeight)) / _AreaHeight;
+                // 原点向x轴正方向偏移，uv要反向偏移
+                uv.x = pos.x / _AreaWidth - _OffsetX;
+                uv.y = (pos.y - (1 - _AreaHeight)) / _AreaHeight - _OffsetY;
                 // sample the texture
                 fixed4 col = tex2D(_MainTex, uv);
                 return col;

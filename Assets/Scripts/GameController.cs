@@ -18,4 +18,12 @@ public class GameController : MonoBehaviour
       controller.Init();
     }
   }
+
+    private void OnDestroy()
+    {
+        foreach (Controller controller in ControllersNeedToBeInitAtGameStart)
+        {
+            controller.OnDestroy();
+        }
+    }
 }

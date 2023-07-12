@@ -80,6 +80,7 @@ public class RandomBuffItemSpawn : SingleTon<RandomBuffItemSpawn>, IObjectPool<G
         item.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         item.GetComponent<BuffCollectable>().args = null;
         item.SetActive(false);
+        item.transform.SetParent(transform);
         pool.Enqueue(item);
     }
 

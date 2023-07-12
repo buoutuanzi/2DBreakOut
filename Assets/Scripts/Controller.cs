@@ -25,4 +25,10 @@ public class Controller
     this._view.Init();
     this._model.Init();
   }
+
+    public virtual void OnDestroy()
+    {
+        this._view.OnDestroy();
+        this._model.OnDestroy();
+    }
 }

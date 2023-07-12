@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using UnityEngine;
 
 public class EventBus : SingleTon<EventBus>
 {
-  public delegate void CallBack(Object args);
+  public delegate void CallBack(object args);
   Dictionary<EventType, LinkedList<CallBack>> _eventToQueueMap = null;
 
   public void RegisteTo(EventType eventType, CallBack callBack)
@@ -25,8 +27,9 @@ public class EventBus : SingleTon<EventBus>
     }
   }
 
-  public void TriggerEvent(EventType eventType, Object args)
+  public void TriggerEvent(EventType eventType, object args)
   {
+    UnityEngine.Debug.Log("´¥·¢ÊÂ¼þ£º" + eventType);
     LinkedList<CallBack> queue = GetQueue(eventType);
     if (queue != null)
     {

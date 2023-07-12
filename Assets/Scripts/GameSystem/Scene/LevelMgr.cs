@@ -15,17 +15,21 @@ public class LevelMgr : SingleTon<LevelMgr>
       return false;
     }
 
-    SceneMgr.Instance.SwitchScene(targetSceneName);
+    SceneMgr.Instance.SwitchScene(targetSceneName, OnSceneLoaded);
     _curLevelIndex = levelIndex;
-    EventBus.Instance.TriggerEvent(EventType.OnLevelBegin, null);
     return true;
   }
+
+    private void OnSceneLoaded()
+    {
+        EventBus.Instance.TriggerEvent(EventType.OnLevelBegin, null);
+    }
 
   public void ToNextLevel(object args)
   {
     if (!SwitchLevel(_curLevelIndex + 1))
     {
-      SceneMgr.Instance.SwitchScene(SceneConfig.ENDSCENENAME);
+      SceneMgr.Instance.SwitchScene(SceneConfig.ENDSCENENAME, null);
     }
   }
 

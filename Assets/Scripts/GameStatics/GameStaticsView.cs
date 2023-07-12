@@ -6,15 +6,16 @@ using UnityEngine;
 public class GameStaticsView : View
 {
   private TMP_Text _leftBlockCounterText;
-  private const string COUNTER_TEXT_PATH = "/UI/GameStaticsUI/LeftBlockCounterText";
+  private const string COUNTER_TEXT_PATH = "/GameUI/GameStaticsUI/LeftBlockCounterText";
   private const string COUNTER_TEXT_PREFFIX = "LeftBlock:";
 
   public override void Init()
   {
-    BindUI();
+    BindUI(null);
+    EventBus.Instance.RegisteTo(EventType.OnLevelBegin, BindUI);
   }
 
-  private void BindUI()
+  private void BindUI(object args)
   {
     _leftBlockCounterText = GameObject.Find(COUNTER_TEXT_PATH).GetComponent<TMP_Text>();
     UpdateLeftBlockUI(0);
@@ -30,4 +31,9 @@ public class GameStaticsView : View
   {
     _leftBlockCounterText.text = COUNTER_TEXT_PREFFIX + leftBlock;
   }
+
+    public override void OnDestroy()
+    {
+        EventBus.Instance.UnRegisteTo(EventType.OnLevelBegin, BindUI);
+    }
 }
