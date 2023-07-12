@@ -19,12 +19,18 @@ public class Controller
     _view.OnDataChange(changedData);
   }
 
-  public virtual void Init()
-  {
-    // 先初始化view，这样model初始化完数据可以马上更新一次view
-    this._view.Init();
-    this._model.Init();
-  }
+      public virtual void Init()
+      {
+        // 先初始化view，这样model初始化完数据可以马上更新一次view
+        this._view.Init();
+        this._model.Init();
+      }
+
+      public virtual void Reset()
+      { 
+          _view.Reset();
+          _model.Reset();
+      }  
 
     public virtual void OnDestroy()
     {

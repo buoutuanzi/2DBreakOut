@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.ShortcutManagement;
 
 public class GameStaticsModel : Model
 {
@@ -10,50 +11,56 @@ public class GameStaticsModel : Model
 
   public override void Init()
   {
-    InitData(null);
+    InitData();
     BindEvents();
   }
 
-  private void InitData(object args)
-  {
-    GameObject blockRoot = GameObject.Find(BLOCK_ROOT_NAME);
-    _leftBlock = blockRoot.transform.childCount;
-    UpdateData();
-  }
-
-  private void BindEvents()
-  {
-    EventBus.Instance.RegisteTo(EventType.OnBlockDestory, MinusBlock);
-    EventBus.Instance.RegisteTo(EventType.OnLevelBegin, InitData);
-  }
+    private void BindEvents()
+    {
+        EventBus.Instance.RegisteTo(EventType.OnBlockDestory, MinusBlock);
+    }
 
     private void UnBindEvents()
     {
         EventBus.Instance.UnRegisteTo(EventType.OnBlockDestory, MinusBlock);
-        EventBus.Instance.UnRegisteTo(EventType.OnLevelBegin, InitData);
     }
 
-  private void MinusBlock(object args)
-  {
-    _leftBlock--;
-
-    UpdateData();
-
-    if (_leftBlock <= 0)
+    private void InitData()
     {
-      EventBus.Instance.TriggerEvent(EventType.OnLevelComplete, null);
+    GameObject blockRoot = GameObject.Find(BLOCK_ROOT_NAME);
+    _leftBlock = blockRoot.transform.childCount;
+    UpdateData();
     }
-  }
-
-  private void UpdateData()
-  {
-    _controller.OnDataChange(new Dictionary<Enum, object>(){
-        {GameStaticsEnum.LeftBlockValue, _leftBlock}
-    });
-  }
 
     public override void OnDestroy()
     {
         UnBindEvents();
+        return;
     }
+
+    public override void Reset()
+    {
+        InitData();
+    }
+
+    public void MinusBlock(object args)
+    {
+        _leftBlock--;
+
+        UpdateData();
+
+        if (_leftBlock <= 0)
+        {
+            EventBus.Instance.TriggerEvent(EventType.OnLevelComplete, null);
+        }
+    }
+
+    private void UpdateData()
+    {
+        _controller.OnDataChange(new Dictionary<Enum, object>(){
+            {GameStaticsEnum.LeftBlockValue, _leftBlock}
+        });
+    }
+
+    
 }

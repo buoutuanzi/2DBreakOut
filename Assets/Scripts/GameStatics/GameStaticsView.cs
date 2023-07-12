@@ -12,7 +12,6 @@ public class GameStaticsView : View
   public override void Init()
   {
     BindUI(null);
-    EventBus.Instance.RegisteTo(EventType.OnLevelBegin, BindUI);
   }
 
   private void BindUI(object args)
@@ -34,6 +33,11 @@ public class GameStaticsView : View
 
     public override void OnDestroy()
     {
-        EventBus.Instance.UnRegisteTo(EventType.OnLevelBegin, BindUI);
+        _leftBlockCounterText = null;
+    }
+
+    public override void Reset()
+    {
+        BindUI(null);
     }
 }
