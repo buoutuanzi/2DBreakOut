@@ -46,9 +46,13 @@ public class ChangeBulletVelocityBuff : IBuff
         }
         // 修改已激活子弹的速度
         float deltaScale = curSpeedScale / oldScale;
-        foreach (var bullet in BulletSpawn.Instance.activeBulletSet)
+        if (BulletSpawn.hasInstance())
         {
-            bullet.GetComponent<Bullet>().SetVelocityByScaleRefNow(deltaScale);
+            foreach (var bullet in BulletSpawn.Instance.activeBulletSet)
+            {
+                bullet.GetComponent<Bullet>().SetVelocityByScaleRefNow(deltaScale);
+            }
         }
+        
     }
 }

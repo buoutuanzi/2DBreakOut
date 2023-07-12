@@ -29,7 +29,10 @@ public class RandomBuffItemSpawn : SingleTon<RandomBuffItemSpawn>, IObjectPool<G
         if (ItemPrefab)
         {
             ItemPrefab = null;
-            ResourceMgr.Instance.ReleaseByPath(ItemPath);
+            if (ResourceMgr.hasInstance())
+            {
+                ResourceMgr.Instance.ReleaseByPath(ItemPath);
+            } 
         }
     }
 
@@ -93,7 +96,7 @@ public class RandomBuffItemSpawn : SingleTon<RandomBuffItemSpawn>, IObjectPool<G
         }
     }
 
-    private void OnDestroy()
+    private void OnApplicationQuit()
     {
         Clear();
         ReleasePrefab();

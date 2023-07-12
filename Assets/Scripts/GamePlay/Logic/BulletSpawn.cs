@@ -86,7 +86,11 @@ public class BulletSpawn : SingleTon<BulletSpawn>, IObjectPool<GameObject>
     if (bulletPrefab)
     {
       bulletPrefab = null;
-      ResourceMgr.Instance.ReleaseByPath(prefabPath);
+        if (ResourceMgr.hasInstance())
+        {
+            ResourceMgr.Instance.ReleaseByPath(prefabPath);
+        }
+      
     }
   }
 
@@ -117,12 +121,7 @@ public class BulletSpawn : SingleTon<BulletSpawn>, IObjectPool<GameObject>
     pool.Clear();
   }
 
-  private void OnLevelComplete(object args)
-    {
-        Clear();
-    }
-
-  private void OnDestroy()
+  private void OnApplicationQuit()
   {
     Clear();
     ReleasePrefab();

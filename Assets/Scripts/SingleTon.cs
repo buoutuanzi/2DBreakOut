@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class SingleTon<T> : MonoBehaviour where T : SingleTon<T>
 {
+  public static bool hasInstance()
+  {
+      return _instance != null;
+  }
   private static T _instance;
   public static T Instance
   {

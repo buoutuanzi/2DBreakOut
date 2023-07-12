@@ -1,8 +1,6 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.ShortcutManagement;
 
 public class GameStaticsModel : Model
 {
@@ -22,7 +20,10 @@ public class GameStaticsModel : Model
 
     private void UnBindEvents()
     {
-        EventBus.Instance.UnRegisteTo(EventType.OnBlockDestory, MinusBlock);
+        if (EventBus.hasInstance())
+        {
+            EventBus.Instance.UnRegisteTo(EventType.OnBlockDestory, MinusBlock);
+        }
     }
 
     private void InitData()
@@ -61,6 +62,4 @@ public class GameStaticsModel : Model
             {GameStaticsEnum.LeftBlockValue, _leftBlock}
         });
     }
-
-    
 }

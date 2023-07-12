@@ -47,8 +47,12 @@ public class BuffMgr : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventBus.Instance.UnRegisteTo(EventType.OnBuffTrigger, OnTriggerBuff);
-        EventBus.Instance.UnRegisteTo(EventType.OnLevelComplete, OnLevelComplete);
+        if (EventBus.hasInstance())
+        {
+            EventBus.Instance.UnRegisteTo(EventType.OnBuffTrigger, OnTriggerBuff);
+            EventBus.Instance.UnRegisteTo(EventType.OnLevelComplete, OnLevelComplete);
+        }
+        
         foreach (IBuff buff in _activeBuff)
         {
             buff.Destroy();

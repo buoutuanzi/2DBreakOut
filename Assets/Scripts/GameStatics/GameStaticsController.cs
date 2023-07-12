@@ -19,7 +19,11 @@ public class GameStaticsController : Controller
 
     private void UnBindEvents()
     {
-        EventBus.Instance.RegisteTo(EventType.OnLevelBegin, ResetThis);
+        if (EventBus.hasInstance())
+        {
+            EventBus.Instance.RegisteTo(EventType.OnLevelBegin, ResetThis);
+        }
+        
     }
 
     private void ResetThis(object args)

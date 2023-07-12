@@ -15,6 +15,9 @@ public class BuffCollectable : Collidable, IReuseableItem
 
     public void Return()
     {
-        RandomBuffItemSpawn.Instance.Return(gameObject);
+        if (RandomBuffItemSpawn.hasInstance())
+        {
+            RandomBuffItemSpawn.Instance.Return(gameObject);
+        }  
     }
 }
