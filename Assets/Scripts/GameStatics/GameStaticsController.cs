@@ -2,7 +2,7 @@ using JetBrains.Annotations;
 
 public class GameStaticsController : Controller
 {
-  public GameStaticsController(Model model, View view) : base(model, view)
+  public GameStaticsController(Model model, View[] views) : base(model, views)
   {
   }
 

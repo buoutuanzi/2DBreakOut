@@ -8,7 +8,7 @@ public class GameController : MonoBehaviour
     }
 
     private Controller[] ControllersNeedToBeInitAtGameStart = new Controller[] {
-        new GameStaticsController(new GameStaticsModel(), new GameStaticsView())
+        new GameStaticsController(new GameStaticsModel(), new View[]{ new GameStaticsView()})
     };
 
     private void Start()
