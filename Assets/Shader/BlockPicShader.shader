@@ -3,8 +3,8 @@ Shader "Unlit/BlockPicShader"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _AreaWidth("AreaWidth", float) = 1
-        _AreaHeight ("AreaHeight", float) = 0.5
+        _AreaWidth("图片显示区域占ViewPort的大小，从左往右", float) = 1
+        _AreaHeight ("图片显示区域占ViewPort的大小，从上往下", float) = 0.5
     }
     SubShader
     {
