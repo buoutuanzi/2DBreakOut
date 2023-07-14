@@ -35,7 +35,7 @@ public class Shooter : MonoBehaviour
 
   private void OnDestroy()
   {
-    if (_isWaitingBullet)
+    if (_isWaitingBullet && EventBus.hasInstance())
     {
       EventBus.Instance.UnRegisteTo(EventType.OnBulletCanBeGet, OnBulletCanBeGet);
     }

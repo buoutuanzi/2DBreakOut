@@ -72,6 +72,9 @@ public class BulletSpawn : SingleTon<BulletSpawn>
 
   public void Return(GameObject bullet)
   {
+    bullet.transform.SetParent(null);
+    // 要重新标记一下，不然还是会销毁掉
+    DontDestroyOnLoad(bullet);
     bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     activeBulletSet.Remove(bullet);
     pool.Return(bullet);
@@ -96,7 +99,7 @@ public class BulletSpawn : SingleTon<BulletSpawn>
     }
     for (int i = 0; i < toBeDestroy.Length; i++)
     {
-        DestroyImmediate(toBeDestroy[i]);
+        Destroy(toBeDestroy[i]);
     }
     // 清空对象池
     pool.Clear();

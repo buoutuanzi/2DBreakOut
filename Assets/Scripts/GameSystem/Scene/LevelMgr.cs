@@ -27,7 +27,7 @@ public class LevelMgr : SingleTon<LevelMgr>
 
   public void ToNextLevel(object args)
   {
-    if (!SwitchLevel(_curLevelIndex + 1))
+    if (_curLevelIndex < 0 || !SwitchLevel(_curLevelIndex + 1))
     {
       SceneMgr.Instance.SwitchScene(SceneConfig.ENDSCENENAME, null);
     }
@@ -35,6 +35,10 @@ public class LevelMgr : SingleTon<LevelMgr>
 
   private void OnDestroy()
   {
-    EventBus.Instance.UnRegisteTo(EventType.OnLevelComplete, ToNextLevel);
+        if (EventBus.hasInstance())
+        {
+            EventBus.Instance.UnRegisteTo(EventType.OnLevelComplete, ToNextLevel);
+        }
+    
   }
 }
