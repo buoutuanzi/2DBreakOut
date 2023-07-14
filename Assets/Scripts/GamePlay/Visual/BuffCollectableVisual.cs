@@ -6,32 +6,12 @@ public class BuffCollectableVisual : MonoBehaviour
 {
     [SerializeField]
     private SpriteRenderer itemSpriteRenderer;
-    private BuffCollectable buffCollectable;
-    private Color _curColor = BuffCollectableVisualConfig.DefaultColor;
-    private void Awake()
-    {
-        buffCollectable = GetComponent<BuffCollectable>();
-    }
 
-    public void UpdateVisual()
+    public void UpdateVisual(BuffItemSingleVisualConfig config)
     {
-        BuffType buff = buffCollectable.buffType;
-        Color targetColor = BuffCollectableVisualConfig.DefaultColor;
-        if (BuffCollectableVisualConfig.IsHasConfig(buff))
+        if (config != null)
         {
-            targetColor = BuffCollectableVisualConfig.GetVisualColorByBuff(buff);
-        }
-
-        UpdateColor(targetColor);   
-    }
-
-    private void UpdateColor(Color targetColor)
-    {
-        if(targetColor == _curColor)
-        {
-            return;
-        }
-
-        itemSpriteRenderer.color = targetColor;
+            itemSpriteRenderer.sprite = config.sprite;
+        }  
     }
 }

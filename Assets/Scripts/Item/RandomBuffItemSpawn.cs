@@ -7,6 +7,9 @@ using System;
 // 随机生成碰到后产生特殊效果的物体
 public class RandomBuffItemSpawn : MonoSingleTon<RandomBuffItemSpawn>
 {
+    public BuffItemVisualConfig visualConfig;
+    private Dictionary<BuffType, BuffItemSingleVisualConfig> buff2VisualConfigMap = 
+        new Dictionary<BuffType, BuffItemSingleVisualConfig>();
     const string ItemPath = "Prefabs/BuffItem";
     private GameObject ItemPrefab;
     PrefabObjectPool pool;
@@ -14,10 +17,22 @@ public class RandomBuffItemSpawn : MonoSingleTon<RandomBuffItemSpawn>
     protected override void Awake()
     {
         base.Awake();
+        ParseConfig();
         LoadPrefab();
         if(ItemPrefab != null)
         {
             pool = new PrefabObjectPool(ItemPrefab, defaultItemPoolCapcity);
+        }
+    }
+
+    private void ParseConfig()
+    {
+        if (visualConfig)
+        {
+            foreach(var config in visualConfig.configs)
+            {
+                buff2VisualConfigMap.Add(config.buffType, config);
+            }
         }
     }
 
@@ -44,12 +59,13 @@ public class RandomBuffItemSpawn : MonoSingleTon<RandomBuffItemSpawn>
     public void SpawnByPosition(Vector3 pos)
     {
         GameObject go = pool.Spawn();
-        SetRandomBuff(go);
-        go.GetComponent<BuffCollectableVisual>().UpdateVisual();
+        BuffType buffType = SetRandomBuff(go);
+        BuffItemSingleVisualConfig visualConfig = buff2VisualConfigMap[buffType];
+        go.GetComponent<BuffCollectableVisual>().UpdateVisual(visualConfig);
         go.transform.SetPositionAndRotation(pos, Quaternion.identity);
     }
 
-    private void SetRandomBuff(GameObject item)
+    private BuffType SetRandomBuff(GameObject item)
     {
         BuffCollectable buffCollectable = item.GetComponent<BuffCollectable>();
         BuffType buffType = BuffUtils.GetARandomBuffType();
@@ -59,6 +75,7 @@ public class RandomBuffItemSpawn : MonoSingleTon<RandomBuffItemSpawn>
             buffCollectable.args = args;
         }
         buffCollectable.buffType = buffType;
+        return buffType;
     }
     public void Return(GameObject item)
     {
