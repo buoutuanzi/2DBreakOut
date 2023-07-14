@@ -5,14 +5,15 @@ using UnityEngine;
 using System;
 
 // 随机生成碰到后产生特殊效果的物体
-public class RandomBuffItemSpawn : SingleTon<RandomBuffItemSpawn>
+public class RandomBuffItemSpawn : MonoSingleTon<RandomBuffItemSpawn>
 {
     const string ItemPath = "Prefabs/BuffItem";
     private GameObject ItemPrefab;
     PrefabObjectPool pool;
     private int defaultItemPoolCapcity = 10;
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         LoadPrefab();
         if(ItemPrefab != null)
         {
@@ -20,16 +21,15 @@ public class RandomBuffItemSpawn : SingleTon<RandomBuffItemSpawn>
         }
     }
 
-    void LoadPrefab()
+    private void LoadPrefab()
     {
         if (ItemPath != null && ItemPath.Length > 0)
         {
             ItemPrefab = (GameObject)ResourceMgr.Instance.LoadFromPath(ItemPath);
         }
-
     }
 
-    void ReleasePrefab()
+    private void ReleasePrefab()
     {
         if (ItemPrefab)
         {
@@ -72,5 +72,4 @@ public class RandomBuffItemSpawn : SingleTon<RandomBuffItemSpawn>
         pool.Clear();
         ReleasePrefab();
     }
-    
 }

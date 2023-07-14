@@ -81,7 +81,24 @@ public class BulletSpawn : SingleTon<BulletSpawn>
 
   private void OnApplicationQuit()
   {
-    pool.Clear();
+    ClearBullet();
     ReleasePrefab();
+  }
+
+  private void ClearBullet()
+  {
+    // 清除已激活
+    GameObject[] toBeDestroy = new GameObject[activeBulletSet.Count];
+    int index = 0;
+    foreach (GameObject bullet in activeBulletSet)
+    {
+        toBeDestroy[index++] = bullet;
+    }
+    for (int i = 0; i < toBeDestroy.Length; i++)
+    {
+        DestroyImmediate(toBeDestroy[i]);
+    }
+    // 清空对象池
+    pool.Clear();
   }
 }
