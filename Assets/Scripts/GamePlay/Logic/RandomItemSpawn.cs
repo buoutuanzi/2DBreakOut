@@ -5,14 +5,19 @@ using UnityEngine;
 using System;
 
 // 随机生成碰到后产生特殊效果的物体
-public class RandomBuffItemSpawn : SingleTon<RandomBuffItemSpawn>, IObjectPool<GameObject>
+public class RandomBuffItemSpawn : SingleTon<RandomBuffItemSpawn>
 {
     const string ItemPath = "Prefabs/BuffItem";
     private GameObject ItemPrefab;
-    Queue<GameObject> pool = new Queue<GameObject>();
+    PrefabObjectPool pool;
+    private int defaultItemPoolCapcity = 10;
     private void Awake()
     {
         LoadPrefab();
+        if(ItemPrefab != null)
+        {
+            pool = new PrefabObjectPool(ItemPrefab, defaultItemPoolCapcity);
+        }
     }
 
     void LoadPrefab()
@@ -36,30 +41,9 @@ public class RandomBuffItemSpawn : SingleTon<RandomBuffItemSpawn>, IObjectPool<G
         }
     }
 
-    public GameObject Spawn()
-    {
-        if (pool.Count > 0)
-        {
-            GameObject item = pool.Dequeue();
-            item.SetActive(true);
-            return item;
-        }
-        if (ItemPrefab == null)
-        {
-            LoadPrefab();
-        }
-        if (ItemPrefab != null)
-        {
-            GameObject go = Instantiate(ItemPrefab, Vector3.zero, Quaternion.identity);
-            return go;
-        }
-
-        return null;
-    }
-
     public void SpawnByPosition(Vector3 pos)
     {
-        GameObject go = Spawn();
+        GameObject go = pool.Spawn();
         SetRandomBuff(go);
         go.GetComponent<BuffCollectableVisual>().UpdateVisual();
         go.transform.SetPositionAndRotation(pos, Quaternion.identity);
@@ -78,27 +62,14 @@ public class RandomBuffItemSpawn : SingleTon<RandomBuffItemSpawn>, IObjectPool<G
     }
     public void Return(GameObject item)
     {
-        item.transform.position = Vector3.zero;
-        item.transform.rotation = Quaternion.identity;
         item.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         item.GetComponent<BuffCollectable>().args = null;
-        item.SetActive(false);
-        item.transform.SetParent(transform);
-        pool.Enqueue(item);
-    }
-
-    public void Clear()
-    {
-        while (pool.Count > 0)
-        {
-            GameObject go = pool.Dequeue();
-            DestroyImmediate(go);
-        }
+        pool.Return(item);
     }
 
     private void OnApplicationQuit()
     {
-        Clear();
+        pool.Clear();
         ReleasePrefab();
     }
     

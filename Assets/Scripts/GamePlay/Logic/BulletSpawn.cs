@@ -1,11 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class BulletSpawn : SingleTon<BulletSpawn>, IObjectPool<GameObject>
+public class BulletSpawn : SingleTon<BulletSpawn>
 {
-  int canCreate = 10;
+  private int defaultBulletPoolCapcity = 10;
 
-  Queue<GameObject> pool = new Queue<GameObject>();
+  private PrefabObjectPool pool;
   string prefabPath = "Prefabs/Bullet";
   GameObject bulletPrefab;
 
@@ -14,6 +14,11 @@ public class BulletSpawn : SingleTon<BulletSpawn>, IObjectPool<GameObject>
     private void Awake()
     {
         EventBus.Instance.RegisteTo(EventType.OnLevelComplete, CollectAllActiveBullet);
+        LoadPrefab();
+        if(bulletPrefab != null)
+        {
+            pool = new PrefabObjectPool(bulletPrefab, defaultBulletPoolCapcity);
+        }
     }
 
     private void CollectAllActiveBullet(object args)
@@ -32,44 +37,16 @@ public class BulletSpawn : SingleTon<BulletSpawn>, IObjectPool<GameObject>
 
     public GameObject GetAndAttachTo(Transform parentTransform)
   {
-    GameObject bullet = Spawn();
+    GameObject bullet = pool.Spawn();
     if (bullet != null)
     {
       bullet.transform.SetParent(parentTransform);
       bullet.transform.localPosition = Vector3.zero;
       bullet.transform.localRotation = Quaternion.identity;
+      activeBulletSet.Add(bullet);
     }
 
     return bullet;
-  }
-
-  public GameObject Spawn()
-  {
-    if (pool.Count > 0)
-    {
-      GameObject bullet = pool.Dequeue();
-      bullet.SetActive(true);
-      activeBulletSet.Add(bullet);
-      return bullet;
-    }
-
-    if (canCreate > 0)
-    {
-      if (bulletPrefab == null)
-      {
-        LoadPrefab();
-      }
-      if (bulletPrefab != null)
-      {
-        GameObject go = Instantiate(bulletPrefab, Vector3.zero, Quaternion.identity);
-        canCreate--;
-        activeBulletSet.Add(go);
-        return go;
-      }
-
-    }
-
-    return null;
   }
 
   void LoadPrefab()
@@ -90,40 +67,21 @@ public class BulletSpawn : SingleTon<BulletSpawn>, IObjectPool<GameObject>
         {
             ResourceMgr.Instance.ReleaseByPath(prefabPath);
         }
-      
     }
   }
 
   public void Return(GameObject bullet)
   {
-    bullet.transform.position = Vector3.zero;
-    bullet.transform.rotation = Quaternion.identity;
     bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-    bullet.SetActive(false);
-    bullet.transform.SetParent(transform);
     activeBulletSet.Remove(bullet);
-    pool.Enqueue(bullet);
+    pool.Return(bullet);
 
     EventBus.Instance.TriggerEvent(EventType.OnBulletCanBeGet, null);
   }
 
-  public void Clear()
-  {
-    foreach(var bullet in activeBulletSet)
-    {
-        DestroyImmediate(bullet);
-    }
-    while (pool.Count > 0)
-    {
-      GameObject go = pool.Dequeue();
-      DestroyImmediate(go);
-    }
-    pool.Clear();
-  }
-
   private void OnApplicationQuit()
   {
-    Clear();
+    pool.Clear();
     ReleasePrefab();
   }
 }
