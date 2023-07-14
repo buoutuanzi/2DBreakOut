@@ -1,12 +1,7 @@
 using UnityEngine;
 
-public class GameController : MonoBehaviour
+public class GameController : MonoSingleTon<GameController>
 {
-    private void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
-
     private Controller[] ControllersNeedToBeInitAtGameStart = new Controller[] {
         new GameStaticsController(new GameStaticsModel(), new View[]{ new GameStaticsView()})
     };

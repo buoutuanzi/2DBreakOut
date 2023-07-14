@@ -8,16 +8,19 @@ using System;
 public class RandomBuffItemSpawn : MonoSingleTon<RandomBuffItemSpawn>
 {
     public BuffItemVisualConfig visualConfig;
+    public LevelItemSpawnChance levelChanceConfig;
     private Dictionary<BuffType, BuffItemSingleVisualConfig> buff2VisualConfigMap = 
         new Dictionary<BuffType, BuffItemSingleVisualConfig>();
     const string ItemPath = "Prefabs/BuffItem";
     private GameObject ItemPrefab;
     PrefabObjectPool pool;
     private int defaultItemPoolCapcity = 10;
+    private BuffItemBuilder buffItemBuilder = new BuffItemBuilder();
     protected override void Awake()
     {
         base.Awake();
-        ParseConfig();
+        buffItemBuilder.SetVisualConfig(visualConfig);
+        //ParseConfig();
         LoadPrefab();
         if(ItemPrefab != null)
         {
@@ -58,25 +61,31 @@ public class RandomBuffItemSpawn : MonoSingleTon<RandomBuffItemSpawn>
 
     public void SpawnByPosition(Vector3 pos)
     {
-        GameObject go = pool.Spawn();
-        BuffType buffType = SetRandomBuff(go);
-        BuffItemSingleVisualConfig visualConfig = buff2VisualConfigMap[buffType];
-        go.GetComponent<BuffCollectableVisual>().UpdateVisual(visualConfig);
-        go.transform.SetPositionAndRotation(pos, Quaternion.identity);
+        if (CheckSpawn())
+        {
+            GameObject go = pool.Spawn();
+            buffItemBuilder.SetBuffItem(go)
+                .SetBuffType(null)
+                .SetBuffArgs(null)
+                .Build();
+            go.transform.SetPositionAndRotation(pos, Quaternion.identity);
+        }
     }
 
-    private BuffType SetRandomBuff(GameObject item)
+    private bool CheckSpawn()
     {
-        BuffCollectable buffCollectable = item.GetComponent<BuffCollectable>();
-        BuffType buffType = BuffUtils.GetARandomBuffType();
-        if (BuffGenerationConfig.IsHasConfig(buffType))
+        float curLevelChance = 0f;
+        List<float> chanceConfig = levelChanceConfig.chanceConfig;
+        int configIndex = chanceConfig.Count - 1;
+        if (LevelMgr.Instance.CurLevel <= chanceConfig.Count)
         {
-            float args = BuffUtils.GetARandomBuffArgs(buffType);
-            buffCollectable.args = args;
+            configIndex = LevelMgr.Instance.CurLevel - 1;
         }
-        buffCollectable.buffType = buffType;
-        return buffType;
+        if(configIndex < 0) configIndex = 0;
+        curLevelChance = chanceConfig[configIndex];
+        return UnityEngine.Random.Range(0f, 1f) < curLevelChance;
     }
+
     public void Return(GameObject item)
     {
         item.GetComponent<Rigidbody2D>().velocity = Vector2.zero;

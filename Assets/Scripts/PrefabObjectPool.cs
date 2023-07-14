@@ -24,7 +24,7 @@ public class PrefabObjectPool
         if (prefab != null)
         {
             GameObject go = GameObject.Instantiate(prefab, Vector3.zero, Quaternion.identity);
-            GameObject.DontDestroyOnLoad(go);
+            Object.DontDestroyOnLoad(go);
             return go;
         }
         return null;

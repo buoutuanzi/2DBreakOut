@@ -1,6 +1,6 @@
 public class LevelMgr : SingleTon<LevelMgr>
 {
-
+  public int CurLevel { get { return _curLevelIndex + 1; } }
   private int _curLevelIndex = -1;
   private void Awake()
   {

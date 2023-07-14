@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-    private float DropItemChance = 0.4f;
   private void OnCollisionEnter2D(Collision2D other)
   {
     OnHit();
@@ -10,18 +9,14 @@ public class Block : MonoBehaviour
 
   private void DestroySelf()
   {
-   RandomDropItem();
+    DropItem();
     EventBus.Instance.TriggerEvent(EventType.OnBlockDestory, null);
     gameObject.SetActive(false);
   }
 
-    private void RandomDropItem()
+    private void DropItem()
     {
-        float chance = Random.Range(0f,1f);
-        if(chance <= DropItemChance)
-        {
-            RandomBuffItemSpawn.Instance.SpawnByPosition(transform.position);
-        }
+        RandomBuffItemSpawn.Instance.SpawnByPosition(transform.position);
     }
 
   private void OnHit()
