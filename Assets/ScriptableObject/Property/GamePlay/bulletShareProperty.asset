@@ -9,13 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b275778888249c747a75c72f7dab1e0e, type: 3}
-  m_Name: buffEffectConfig
+  m_Script: {fileID: 11500000, guid: f1f675a3fc8f0544e8e9d405080220a0, type: 3}
+  m_Name: bulletShareProperty
   m_EditorClassIdentifier: 
-  effectConfigs:
-  - buffType: 0
-    minValue: 0.5
-    maxValue: 2
-  - buffType: 1
-    minValue: 0.5
-    maxValue: 2
+  attack: 1

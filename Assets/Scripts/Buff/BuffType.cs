@@ -2,5 +2,6 @@
 public enum BuffType
 {
     ChangeBulletVelocity,
-    ChangePanelLen
+    ChangePanelLen,
+    ChangeBulletAttack
 }
