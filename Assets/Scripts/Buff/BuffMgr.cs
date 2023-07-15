@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Reflection;
+using System.Linq;
 
 public class BuffMgr : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class BuffMgr : MonoBehaviour
     {
         GameUtils.GetAllTypeWithTargetAttribute<BuffProcesserMarker>((t, marker) =>
         {
-            if(t is IBuff)
+            if(t.GetInterfaces().Contains(typeof(IBuff)))
             {
                 _buffType2BuffMap.Add(marker.BuffType, (IBuff)Activator.CreateInstance(t));
             }

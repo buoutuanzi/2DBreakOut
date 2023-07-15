@@ -13,16 +13,4 @@ public class BuffUtils
         BuffType randomBuffType = buffTypes[randomBuffIndex];
         return randomBuffType;
     }
-
-    public static float GetARandomBuffArgs(BuffType buffType)
-    {
-        if (!BuffGenerationConfig.IsHasConfig(buffType))
-        {
-            Debug.LogWarning("该Buff没有配置参数生成配置，Type: " + buffType);
-            return 0f;
-        }
-
-        float[] minMaxConfig = BuffGenerationConfig.GetMinMaxValue(buffType);
-        return UnityEngine.Random.Range(minMaxConfig[0], minMaxConfig[minMaxConfig.Length - 1]);
-    }
 }
