@@ -9,8 +9,7 @@ public class RandomBuffItemSpawn : MonoSingleTon<RandomBuffItemSpawn>
 {
     public BuffItemVisualConfig visualConfig;
     public LevelItemSpawnChance levelChanceConfig;
-    private Dictionary<BuffType, BuffItemSingleVisualConfig> buff2VisualConfigMap = 
-        new Dictionary<BuffType, BuffItemSingleVisualConfig>();
+    public BuffEffectConfig buffEffectConfig;
     const string ItemPath = "Prefabs/BuffItem";
     private GameObject ItemPrefab;
     PrefabObjectPool pool;
@@ -20,22 +19,11 @@ public class RandomBuffItemSpawn : MonoSingleTon<RandomBuffItemSpawn>
     {
         base.Awake();
         buffItemBuilder.SetVisualConfig(visualConfig);
-        //ParseConfig();
+        buffItemBuilder.SetEffectConfig(buffEffectConfig);
         LoadPrefab();
         if(ItemPrefab != null)
         {
             pool = new PrefabObjectPool(ItemPrefab, defaultItemPoolCapcity);
-        }
-    }
-
-    private void ParseConfig()
-    {
-        if (visualConfig)
-        {
-            foreach(var config in visualConfig.configs)
-            {
-                buff2VisualConfigMap.Add(config.buffType, config);
-            }
         }
     }
 

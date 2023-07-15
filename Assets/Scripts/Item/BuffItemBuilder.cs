@@ -9,12 +9,14 @@ public class BuffItemBuilder
         new Dictionary<BuffType, BuffItemSingleVisualConfig>();
     private BuffCollectable curBuffCollectable;
     private BuffCollectableVisual curBuffCollectableVisual;
+    private Dictionary<BuffType, float[]> buff2MinMaxValueMap = 
+        new Dictionary<BuffType, float[]>();
     public void SetVisualConfig(BuffItemVisualConfig visualConfig)
     {
-        ParseConfig(visualConfig);
+        ParseVisualConfig(visualConfig);
     }
 
-    private void ParseConfig(BuffItemVisualConfig visualConfig)
+    private void ParseVisualConfig(BuffItemVisualConfig visualConfig)
     {
         if (visualConfig)
         {
@@ -24,6 +26,21 @@ public class BuffItemBuilder
             }
         }
     }
+
+    public void SetEffectConfig(BuffEffectConfig effectConfig)
+    {
+        ParseEffectConfig(effectConfig);
+    }
+
+    private void ParseEffectConfig(BuffEffectConfig effectConfig)
+    {
+        foreach(var config in effectConfig.effectConfigs)
+        {
+            float[] minMaxValue = new float[2] { config.minValue, config.maxValue};
+            buff2MinMaxValueMap.Add(config.buffType, minMaxValue);
+        }
+    }
+
     public BuffItemBuilder SetBuffItem(GameObject buffItem)
     {
         curBuffItem = buffItem;
@@ -79,7 +96,8 @@ public class BuffItemBuilder
 
             if (args == null)
             {
-                args = BuffUtils.GetARandomBuffArgs(buffType);
+                float[] minMaxValue = buff2MinMaxValueMap[buffType];
+                args = Random.Range(minMaxValue[0], minMaxValue[1]);
             }
             curBuffCollectable.args = args;
         }
