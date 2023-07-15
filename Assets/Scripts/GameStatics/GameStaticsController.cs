@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 
 public class GameStaticsController : Controller
 {

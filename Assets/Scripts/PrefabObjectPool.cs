@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class PrefabObjectPool
 {
@@ -23,7 +21,7 @@ public class PrefabObjectPool
         }
         if (prefab != null)
         {
-            GameObject go = GameObject.Instantiate(prefab, Vector3.zero, Quaternion.identity);
+            GameObject go = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity);
             Object.DontDestroyOnLoad(go);
             return go;
         }
