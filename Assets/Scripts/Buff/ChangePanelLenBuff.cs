@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[BuffProcesserMarker(BuffType.ChangePanelLen)]
 // 每个buff类实现一类buff功能，每个buff类可以重复触发
 public class ChangePannelLenBuff : IBuff
 {

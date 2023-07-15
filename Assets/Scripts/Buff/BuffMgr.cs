@@ -2,16 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Reflection;
 
 public class BuffMgr : MonoBehaviour
 {
-    private Dictionary<BuffType, IBuff> _buffType2BuffMap = new Dictionary<BuffType, IBuff>()
-    {
-        { BuffType.ChangePanelLen , new ChangePannelLenBuff()},
-        { BuffType.ChangeBulletVelocity , new ChangeBulletVelocityBuff()}
-    };
-
+    private Dictionary<BuffType, IBuff> _buffType2BuffMap = new Dictionary<BuffType, IBuff>();
     private List<IBuff> _activeBuff = new List<IBuff>();
+    private void Awake()
+    {
+        RegisterAllBuffProcesser();
+    }
+
+    // 注册所有有BuffProcesserMarker的类
+    public void RegisterAllBuffProcesser()
+    {
+        GameUtils.GetAllTypeWithTargetAttribute<BuffProcesserMarker>((t, marker) =>
+        {
+            if(t is IBuff)
+            {
+                _buffType2BuffMap.Add(marker.BuffType, (IBuff)Activator.CreateInstance(t));
+            }
+            else
+            {
+                Debug.LogWarning("这个类没有继承IBuff，但是标记为了BuffProcesser" + t.Name);
+            }
+        });
+    }
+
     // Start is called before the first frame update
     void Start()
     {

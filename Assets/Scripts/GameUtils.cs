@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
 public class GameUtils
@@ -25,4 +27,17 @@ public class GameUtils
 
     return new Vector2(Math.Clamp(pos.x, 0.0f, screenWidth), Math.Clamp(pos.y, 0.0f, screenHeight));
   }
+
+  public static void GetAllTypeWithTargetAttribute<T>(Action<Type, T> callback) where T : Attribute
+    {
+        Type[] classes = Assembly.GetExecutingAssembly().GetTypes();
+        foreach(var clazz in classes)
+        {
+            T targetAttribute = clazz.GetCustomAttribute<T>();
+            if (targetAttribute != null)
+            {
+                callback?.Invoke(clazz, targetAttribute);
+            }
+        }
+    }
 }

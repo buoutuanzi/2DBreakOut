@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[BuffProcesserMarker(BuffType.ChangeBulletVelocity)]
 public class ChangeBulletVelocityBuff : IBuff
 {
     private float originShootForce = 0.0f;
