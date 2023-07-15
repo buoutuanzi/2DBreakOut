@@ -1521,6 +1521,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualConfig: {fileID: 11400000, guid: 592d23d9f2fb67443b8ce231893aaed7, type: 2}
   levelChanceConfig: {fileID: 11400000, guid: 42f678e4ebd72d74b8b9f72b93ace5a6, type: 2}
+  buffEffectConfig: {fileID: 11400000, guid: 0b9ed450366de6844b5ad1267e3fa6ce, type: 2}
 --- !u!4 &1151348764
 Transform:
   m_ObjectHideFlags: 0
