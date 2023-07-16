@@ -4,7 +4,6 @@ using System.Collections.Generic;
 public class BulletSpawn : SingleTon<BulletSpawn>
 {
   private int defaultBulletPoolCapcity = 10;
-
   private PrefabObjectPool pool;
   string prefabPath = "Prefabs/Bullet";
   GameObject bulletPrefab;
@@ -103,5 +102,14 @@ public class BulletSpawn : SingleTon<BulletSpawn>
     }
     // Çå¿Õ¶ÔÏó³Ø
     pool.Clear();
+  }
+
+  public BulletShareProperty GetBulletShareProperty()
+  {
+        if (bulletPrefab)
+        {
+            return bulletPrefab.GetComponent<Bullet>().shareProperty;
+        }
+        return null;
   }
 }

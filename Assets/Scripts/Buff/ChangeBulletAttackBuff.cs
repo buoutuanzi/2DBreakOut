@@ -6,7 +6,7 @@ using UnityEngine;
 public class ChangeBulletAttackBuff : IBuff
 {
     private float originAttack;
-    private float curScale;
+    private BulletShareProperty bulletShareProperty = null;
     public void Destroy()
     {
         Reset();
@@ -14,16 +14,19 @@ public class ChangeBulletAttackBuff : IBuff
 
     public void Reset()
     {
-        Debug.Log("在这里重置子弹攻击力");
+        if (bulletShareProperty)
+        {
+            bulletShareProperty.attack = originAttack;
+        }
     }
 
     public void Trigger(BuffTriggerArgs args)
     {
-        Debug.Log("在这里改变子弹攻击力");
-    }
-
-    private void ChangeBulletAttackByScale(float scale)
-    {
-
+        if (!bulletShareProperty)
+        {
+            bulletShareProperty = BulletSpawn.Instance.GetBulletShareProperty();
+            originAttack = bulletShareProperty.attack;
+        }
+        bulletShareProperty.attack += (float)args.args;
     }
 }

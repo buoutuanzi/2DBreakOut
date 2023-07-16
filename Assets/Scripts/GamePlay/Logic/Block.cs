@@ -1,27 +1,25 @@
 using UnityEngine;
 
-public class Block : MonoBehaviour
+public class Block : Defender
 {
-  private void OnCollisionEnter2D(Collision2D other)
-  {
-    OnHit();
-  }
+    public override void OnHit(float attack)
+    {
+        health -= attack;
+        if(health <= 0)
+        {
+            DestroySelf();
+        }
+    }
 
-  private void DestroySelf()
+    private void DestroySelf()
   {
     DropItem();
     EventBus.Instance.TriggerEvent(EventType.OnBlockDestory, null);
     gameObject.SetActive(false);
   }
 
-    private void DropItem()
-    {
-        RandomBuffItemSpawn.Instance.SpawnByPosition(transform.position);
-    }
-
-  private void OnHit()
+  private void DropItem()
   {
-    DestroySelf();
+    RandomBuffItemSpawn.Instance.SpawnByPosition(transform.position);
   }
-
 }

@@ -4,6 +4,7 @@ public class Bullet : Collidable, IReuseableItem
 {
     Rigidbody2D _rig;
     private float DirScale = 4.0f;
+    public BulletShareProperty shareProperty;
     private void Awake()
   {
     _rig = GetComponent<Rigidbody2D>();

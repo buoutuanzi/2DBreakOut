@@ -20,5 +20,5 @@ MonoBehaviour:
     minValue: 0.5
     maxValue: 2
   - buffType: 2
-    minValue: 0.5
-    maxValue: 2
+    minValue: 1
+    maxValue: 1
