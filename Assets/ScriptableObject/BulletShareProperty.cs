@@ -7,4 +7,5 @@ using UnityEngine;
 public class BulletShareProperty : ScriptableObject
 {
     public float attack;
+    public float velocity;
 }

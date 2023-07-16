@@ -3,55 +3,47 @@ using UnityEngine;
 [BuffProcesserMarker(BuffType.ChangeBulletVelocity)]
 public class ChangeBulletVelocityBuff : IBuff
 {
-    private float originShootForce = 0.0f;
+    private float originVelocity;
     private float curSpeedScale = 1;
     private float minScale = 0.5f;
     private float maxScale = 2;
-    private Shooter shooter = null;
-    const string shooterPath = "GameView/Shooter";
+    private BulletShareProperty bulletShareProperty;
     public void Destroy()
     {
         Reset();
-        shooter = null;
     }
 
     public void Reset()
     {
-        UpdateVelocityByScale(1 / curSpeedScale);
-        shooter = null;
+        UpdateVelocity(originVelocity);
     }
 
     public void Trigger(BuffTriggerArgs args)
     {
-        if (!shooter)
+        if (!bulletShareProperty)
         {
-            shooter = GameObject.Find(shooterPath).GetComponent<Shooter>();
-            originShootForce = shooter.defaultShootForce;
+            bulletShareProperty = BulletSpawn.Instance.GetBulletShareProperty();
+            originVelocity = bulletShareProperty.velocity;
         }
-
-        UpdateVelocityByScale((float)args.args);
-    }
-
-    private void UpdateVelocityByScale(float scale)
-    {
-        float oldScale = curSpeedScale;
+        float scale = (float)args.args;
         curSpeedScale *= scale;
         curSpeedScale = Mathf.Clamp(curSpeedScale, minScale, maxScale);
+        UpdateVelocity(originVelocity * curSpeedScale);
+    }
 
-        // 修改发射器的发射力度
-        if (shooter)
+    private void UpdateVelocity(float newVelocity)
+    {
+        if (bulletShareProperty)
         {
-            shooter.defaultShootForce = curSpeedScale * originShootForce;
-        }
-        // 修改已激活子弹的速度
-        float deltaScale = curSpeedScale / oldScale;
-        if (BulletSpawn.hasInstance())
-        {
-            foreach (var bullet in BulletSpawn.Instance.activeBulletSet)
+            bulletShareProperty.velocity = newVelocity;
+            // 修改已激活子弹的速度
+            if (BulletSpawn.hasInstance())
             {
-                bullet.GetComponent<Bullet>().SetVelocityByScaleRefNow(deltaScale);
+                foreach (var bullet in BulletSpawn.Instance.activeBulletSet)
+                {
+                    bullet.GetComponent<Bullet>().RefreshVelocity();
+                }
             }
         }
-        
     }
 }

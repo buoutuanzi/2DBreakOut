@@ -10,9 +10,10 @@ public class Bullet : Collidable, IReuseableItem
     _rig = GetComponent<Rigidbody2D>();
   }
 
-  public void Shoot(Vector2 dir, float force)
+  public void Shoot(Vector2 dir)
   {
-    _rig.AddForce(dir * force);
+        float speed = shareProperty.velocity;
+        _rig.velocity = dir * speed;
   }
 
   private void OnCollisionEnter2D(Collision2D other)
@@ -45,7 +46,7 @@ public class Bullet : Collidable, IReuseableItem
         _rig.velocity = newVelocityDir * velocityMag;
     }
 
-    public void SetVelocityByScaleRefNow(float scale){
-        _rig.velocity = _rig.velocity * scale;
+    public void RefreshVelocity(){
+        _rig.velocity = _rig.velocity.normalized * shareProperty.velocity;
     }
 }

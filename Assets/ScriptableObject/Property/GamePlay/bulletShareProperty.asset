@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: bulletShareProperty
   m_EditorClassIdentifier: 
   attack: 1
+  velocity: 7

@@ -78,10 +78,9 @@ public class Shooter : MonoBehaviour
   {
     Vector2 velocity = ((transform.position - _mover.LastFramePos) / Time.deltaTime) * speedScale;
     Vector2 shootDir = (defaultShootDir + velocity).normalized;
-    float force = defaultShootForce;
     // 取消子弹跟随
     _curBullet.transform.SetParent(transform.parent);
-    _curBullet.Shoot(shootDir, force);
+    _curBullet.Shoot(shootDir);
     _curBullet = null;
   }
 
