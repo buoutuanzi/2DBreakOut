@@ -5,5 +5,6 @@ public enum EventType
   OnBlockDestory,
   OnLevelComplete,
   OnLevelBegin,
-  OnBuffTrigger
+  OnBuffTrigger,
+  OnItemSpawn
 }

@@ -24,6 +24,7 @@ public class RandomBuffItemSpawn : MonoSingleTon<RandomBuffItemSpawn>
         {
             pool = new PrefabObjectPool(ItemPrefab, defaultItemPoolCapcity);
         }
+        EventBus.Instance.RegisteTo(EventType.OnItemSpawn, SpawnByPosition);
     }
 
     private void LoadPrefab()
@@ -46,8 +47,10 @@ public class RandomBuffItemSpawn : MonoSingleTon<RandomBuffItemSpawn>
         }
     }
 
-    public void SpawnByPosition(Vector3 pos)
+    public void SpawnByPosition(object args)
     {
+        Transform targetTransform = args as Transform;
+        Vector3 pos = targetTransform.position;
         if (CheckSpawn())
         {
             GameObject go = pool.Spawn();
@@ -82,6 +85,10 @@ public class RandomBuffItemSpawn : MonoSingleTon<RandomBuffItemSpawn>
 
     private void OnApplicationQuit()
     {
+        if (EventBus.hasInstance())
+        {
+            EventBus.Instance.RegisteTo(EventType.OnItemSpawn, SpawnByPosition);
+        }
         pool.Clear();
         ReleasePrefab();
     }
