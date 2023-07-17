@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attack: 1
   velocity: 7
+  angularVelScale: 0.005
+  dirScale: 4
+  maxDeltaDeg: 45

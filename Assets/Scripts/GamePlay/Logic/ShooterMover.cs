@@ -8,6 +8,10 @@ public class ShooterMover : MonoBehaviour
     private Vector3 _lastFramePos = Vector3.zero;
     public Vector3 LastFramePos {
         get{ return _lastFramePos; } }
+    public Vector3 Velocity
+    {
+        get { return (transform.position - _lastFramePos) / Time.deltaTime; }
+    }
     private void Awake()
     {
         collisionHalfWidth = GetComponent<BoxCollider2D>().size.x / 2;
