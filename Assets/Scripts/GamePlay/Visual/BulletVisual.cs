@@ -23,7 +23,7 @@ public class BulletVisual : MonoBehaviour
 
     public void UpdateAngularVel(float angularVel)
     {
-        this.angularVel = angularVel;
+        this.angularVel = angularVel * Mathf.Rad2Deg;
     }
 
     private void OnDisable()
