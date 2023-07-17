@@ -24,6 +24,7 @@ public class RandomBuffItemSpawn : MonoSingleTon<RandomBuffItemSpawn>
         {
             pool = new PrefabObjectPool(ItemPrefab, defaultItemPoolCapcity);
         }
+        EventBus.Instance.RegisteTo(EventType.OnLevelComplete, CollectAllActiveItem);
     }
 
     private void LoadPrefab()
@@ -44,6 +45,11 @@ public class RandomBuffItemSpawn : MonoSingleTon<RandomBuffItemSpawn>
                 ResourceMgr.Instance.ReleaseByPath(ItemPath);
             } 
         }
+    }
+
+    private void CollectAllActiveItem(object args)
+    {
+        pool.RestoreAllActive();
     }
 
     public void SpawnByPosition(Vector3 pos)
@@ -82,6 +88,10 @@ public class RandomBuffItemSpawn : MonoSingleTon<RandomBuffItemSpawn>
 
     private void OnApplicationQuit()
     {
+        if (EventBus.hasInstance())
+        {
+            EventBus.Instance.UnRegisteTo(EventType.OnLevelComplete, CollectAllActiveItem);
+        }
         pool.Clear();
         ReleasePrefab();
     }

@@ -19,9 +19,10 @@ public class MonoSingleTon<T> : MonoBehaviour where T : MonoSingleTon<T>
             instance = (T)this;
             DontDestroyOnLoad(gameObject);
         }
-        else
+        else if(instance != this)
         {
             DestroyImmediate(gameObject);
+            return;
         }
     }
 }
