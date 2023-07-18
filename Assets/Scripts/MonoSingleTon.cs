@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ĞèÒªÊÖ¶¯°óµ½Ò»¸öGameObjectÉÏ
+// éœ€è¦æ‰‹åŠ¨ç»‘åˆ°ä¸€ä¸ªGameObjectä¸Š
 public class MonoSingleTon<T> : MonoBehaviour where T : MonoSingleTon<T>
 {
     public static T Instance { get { return instance; } }

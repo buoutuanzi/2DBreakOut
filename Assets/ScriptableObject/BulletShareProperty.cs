@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "bulletShareProperty", menuName = "ScriptableObject/Property/GamePlay/BulletShareProperty")]
-// ×Óµ¯¹²ÓÃÊôĞÔ
+// å­å¼¹å…±ç”¨å±æ€§
 public class BulletShareProperty : ScriptableObject
 {
     public float attack;

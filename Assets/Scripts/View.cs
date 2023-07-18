@@ -3,9 +3,9 @@ using System.Collections.Generic;
 public abstract class View
 {
   protected Controller _controller;
-  // ´´½¨Ê±³õÊ¼»¯£¬Ö»»áµ÷ÓÃÒ»´Î
+  // åˆ›å»ºæ—¶åˆå§‹åŒ–ï¼Œåªä¼šè°ƒç”¨ä¸€æ¬¡
   public abstract void Init();
-  // ¹Ø¿¨ÇĞ»»Ê±ÖØĞÂ³õÊ¼»¯£¬»á¶à´Îµ÷ÓÃ
+  // å…³å¡åˆ‡æ¢æ—¶é‡æ–°åˆå§‹åŒ–ï¼Œä¼šå¤šæ¬¡è°ƒç”¨
   public abstract void Reset();
   public abstract void OnDestroy();
   public void BindController(Controller controller)

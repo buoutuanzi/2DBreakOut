@@ -1,5 +1,5 @@
 
-// ¿ÉÒÔ±»DeadZone»ØÊÕµÄÎïÆ·
+// å¯ä»¥è¢«DeadZoneå›æ”¶çš„ç‰©å“
 public interface IReuseableItem
 {
     public void Return();

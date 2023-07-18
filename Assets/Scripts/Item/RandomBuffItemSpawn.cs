@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-// 随机生成碰到后产生特殊效果的物体
+// 闅忔満鐢熸垚纰板埌鍚庝骇鐢熺壒娈婃晥鏋滅殑鐗╀綋
 public class RandomBuffItemSpawn : MonoSingleTon<RandomBuffItemSpawn>
 {
     public BuffItemVisualConfig visualConfig;

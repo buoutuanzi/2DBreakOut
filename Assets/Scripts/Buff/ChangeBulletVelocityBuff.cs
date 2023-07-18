@@ -36,7 +36,7 @@ public class ChangeBulletVelocityBuff : IBuff
         if (bulletShareProperty)
         {
             bulletShareProperty.velocity = newVelocity;
-            // 修改已激活子弹的速度
+            // 淇敼宸叉縺娲诲瓙寮圭殑閫熷害
             if (BulletSpawn.hasInstance())
             {
                 foreach (var bullet in BulletSpawn.Instance.activeBulletSet)

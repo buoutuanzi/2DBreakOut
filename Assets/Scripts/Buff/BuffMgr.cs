@@ -13,7 +13,7 @@ public class BuffMgr : MonoBehaviour
         RegisterAllBuffProcesser();
     }
 
-    // 注册所有有BuffProcesserMarker的类
+    // 娉ㄥ唽鎵�鏈夋湁BuffProcesserMarker鐨勭被
     public void RegisterAllBuffProcesser()
     {
         GameUtils.GetAllTypeWithTargetAttribute<BuffProcesserMarker>((t, marker) =>
@@ -24,7 +24,7 @@ public class BuffMgr : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("这个类没有继承IBuff，但是标记为了BuffProcesser" + t.Name);
+                Debug.LogWarning("杩欎釜绫绘病鏈夌户鎵縄Buff锛屼絾鏄爣璁颁负浜咮uffProcesser" + t.Name);
             }
         });
     }
@@ -40,10 +40,10 @@ public class BuffMgr : MonoBehaviour
     {
         if(!(args is BuffTriggerArgs))
         {
-            Debug.LogError("Buff 触发参数错误");
+            Debug.LogError("Buff 瑙﹀彂鍙傛暟閿欒");
         }
         BuffTriggerArgs triggerArgs = args as BuffTriggerArgs;
-        Debug.Log("Buff 触发，Type: " + triggerArgs.buffType);
+        Debug.Log("Buff 瑙﹀彂锛孴ype: " + triggerArgs.buffType);
         IBuff triggerBuff = _buffType2BuffMap[triggerArgs.buffType];
         if (!_activeBuff.Contains(triggerBuff))
         {

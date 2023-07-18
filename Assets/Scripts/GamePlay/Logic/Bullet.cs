@@ -72,7 +72,7 @@ public class Bullet : Collidable, IReuseableItem
             Quaternion deltaDir = Quaternion.Euler(0,0, Mathf.Rad2Deg * deltaRad);
             Vector2 newDir = deltaDir * originDir;
             _rig.velocity = newDir * _rig.velocity.magnitude;
-            Debug.LogFormat("原方向{0}，新方向{1}，改变角度{2}", originDir, newDir, Mathf.Rad2Deg * deltaRad);
+            Debug.LogFormat("鍘熸柟鍚憑0}锛屾柊鏂瑰悜{1}锛屾敼鍙樿搴2}", originDir, newDir, Mathf.Rad2Deg * deltaRad);
         }
     }
 

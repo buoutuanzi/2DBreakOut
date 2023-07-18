@@ -63,7 +63,7 @@ public class BuffItemBuilder
         return item;
     }
 
-    // 传入参数为空时，随机生成
+    // 浼犲叆鍙傛暟涓虹┖鏃讹紝闅忔満鐢熸垚
     public BuffItemBuilder SetBuffType(BuffType? buffType)
     {
         if(curBuffItem != null)

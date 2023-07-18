@@ -72,7 +72,7 @@ public class BulletSpawn : SingleTon<BulletSpawn>
   public void Return(GameObject bullet)
   {
     bullet.transform.SetParent(null);
-    // ÒªÖØĞÂ±ê¼ÇÒ»ÏÂ£¬²»È»»¹ÊÇ»áÏú»Ùµô
+    // è¦é‡æ–°æ ‡è®°ä¸€ä¸‹ï¼Œä¸ç„¶è¿˜æ˜¯ä¼šé”€æ¯æ‰
     DontDestroyOnLoad(bullet);
     bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     activeBulletSet.Remove(bullet);
@@ -89,7 +89,7 @@ public class BulletSpawn : SingleTon<BulletSpawn>
 
   private void ClearBullet()
   {
-    // Çå³ıÒÑ¼¤»î
+    // æ¸…é™¤å·²æ¿€æ´»
     GameObject[] toBeDestroy = new GameObject[activeBulletSet.Count];
     int index = 0;
     foreach (GameObject bullet in activeBulletSet)
@@ -100,7 +100,7 @@ public class BulletSpawn : SingleTon<BulletSpawn>
     {
         Destroy(toBeDestroy[i]);
     }
-    // Çå¿Õ¶ÔÏó³Ø
+    // æ¸…ç©ºå¯¹è±¡æ± 
     pool.Clear();
   }
 

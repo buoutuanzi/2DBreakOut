@@ -1,6 +1,6 @@
 using System;
 /// <summary>
-/// ±ê¼ÇÒ»¸öÀàÎªBuffĞ§¹û´¦ÀíÀà
+/// æ ‡è®°ä¸€ä¸ªç±»ä¸ºBuffæ•ˆæœå¤„ç†ç±»
 /// </summary>
 [AttributeUsage(AttributeTargets.Class)]
 public class BuffProcesserMarker : Attribute

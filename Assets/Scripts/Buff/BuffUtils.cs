@@ -1,6 +1,6 @@
 using System;
 
-// 我也不知道这些方法该放哪，弄个Utils类包了吧
+// 鎴戜篃涓嶇煡閬撹繖浜涙柟娉曡鏀惧摢锛屽紕涓猆tils绫诲寘浜嗗惂
 public class BuffUtils
 {
     public static BuffType GetARandomBuffType()

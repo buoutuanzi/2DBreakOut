@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [BuffProcesserMarker(BuffType.ChangePanelLen)]
-// Ã¿¸öbuffÀàÊµÏÖÒ»Ààbuff¹¦ÄÜ£¬Ã¿¸öbuffÀà¿ÉÒÔÖØ¸´´¥·¢
+// æ¯ä¸ªbuffç±»å®ç°ä¸€ç±»buffåŠŸèƒ½ï¼Œæ¯ä¸ªbuffç±»å¯ä»¥é‡å¤è§¦å‘
 public class ChangePannelLenBuff : IBuff
 {
     private float curScale = 1;

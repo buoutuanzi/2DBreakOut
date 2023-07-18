@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ¿ÉÒÔÓëCollisionPanelÅö×²²úÉúĞ§¹ûµÄ
+// å¯ä»¥ä¸CollisionPanelç¢°æ’äº§ç”Ÿæ•ˆæœçš„
 public abstract class Collidable : MonoBehaviour
 {
     public virtual void OnCollidableExit(CollisionPannel other) 
