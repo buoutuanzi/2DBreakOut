@@ -13,13 +13,8 @@ public class Block : Defender
 
     private void DestroySelf()
   {
-    DropItem();
+    EventBus.Instance.TriggerEvent(EventType.OnItemSpawn, transform.position);
     EventBus.Instance.TriggerEvent(EventType.OnBlockDestory, null);
     gameObject.SetActive(false);
-  }
-
-  private void DropItem()
-  {
-    RandomBuffItemSpawn.Instance.SpawnByPosition(transform.position);
   }
 }

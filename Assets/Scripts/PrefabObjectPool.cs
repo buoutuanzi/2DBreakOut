@@ -6,7 +6,7 @@ public class PrefabObjectPool
     private GameObject prefab;
     private int capcity;
     Queue<GameObject> pool = new Queue<GameObject> ();
-    List<GameObject> activeList = new List<GameObject>();
+    public List<GameObject> activeList = new List<GameObject>();
     public PrefabObjectPool(GameObject prefab, int capcity)
     {
         this.prefab = prefab;
@@ -49,14 +49,14 @@ public class PrefabObjectPool
 
     public void RestoreAllActive()
     {
-        while(activeList.Count > 0)
+        while (activeList.Count > 0)
         {
             GameObject item = activeList[0];
             Return(item);
         }
     }
 
-  public void Clear()
+    public void Clear()
     {
         foreach(GameObject item in activeList)
         {

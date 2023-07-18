@@ -24,7 +24,12 @@ public class RandomBuffItemSpawn : MonoSingleTon<RandomBuffItemSpawn>
         {
             pool = new PrefabObjectPool(ItemPrefab, defaultItemPoolCapcity);
         }
+    }
+
+    private void Start()
+    {
         EventBus.Instance.RegisteTo(EventType.OnLevelComplete, CollectAllActiveItem);
+        EventBus.Instance.RegisteTo(EventType.OnItemSpawn, SpawnByPosition);
     }
 
     private void LoadPrefab()
@@ -49,11 +54,23 @@ public class RandomBuffItemSpawn : MonoSingleTon<RandomBuffItemSpawn>
 
     private void CollectAllActiveItem(object args)
     {
+        foreach(var item in pool.activeList)
+        {
+            item.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            item.GetComponent<BuffCollectable>().args = null;
+        }
+
         pool.RestoreAllActive();
     }
 
-    public void SpawnByPosition(Vector3 pos)
+    public void SpawnByPosition(object args)
     {
+        Vector3 pos = Vector3.zero;
+        Vector3? targetPos = args as Vector3?;
+        if (targetPos.HasValue)
+        {
+            pos = targetPos.Value;
+        }
         if (CheckSpawn())
         {
             GameObject go = pool.Spawn();
@@ -90,6 +107,7 @@ public class RandomBuffItemSpawn : MonoSingleTon<RandomBuffItemSpawn>
     {
         if (EventBus.hasInstance())
         {
+            EventBus.Instance.UnRegisteTo(EventType.OnItemSpawn, SpawnByPosition);
             EventBus.Instance.UnRegisteTo(EventType.OnLevelComplete, CollectAllActiveItem);
         }
         pool.Clear();

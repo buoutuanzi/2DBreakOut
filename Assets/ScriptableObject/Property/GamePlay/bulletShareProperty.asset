@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: bulletShareProperty
   m_EditorClassIdentifier: 
   attack: 1
-  velocity: 7
+  velocity: 5
   angularVelScale: 0.005
   dirScale: 4
   maxDeltaDeg: 45
